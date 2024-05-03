@@ -1,0 +1,6 @@
+{
+  "title": "Settings",
+  "language_header": "Language",
+  "language_invite": "Sciencekill is not a much genius, so he can't turn Blazor-OpenBMCLAPI into all kinds of languages like some large company. But he is always willing that somebody could translate the app and send the translation file to him. The one only need to download the translation files (/i18nText) in the GitHub repository, then make a copy of one of the translation files that you understand. Change the language code in the file name. Don't change key, only replace the value!",
+  "language_intro": "You can select your language in the (maybe on the right?) selection box below"
+}

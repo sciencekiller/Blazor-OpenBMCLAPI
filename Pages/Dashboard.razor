@@ -1,0 +1,11 @@
+﻿@page "/"
+@inject Toolbelt.Blazor.I18nText.I18nText I18nText
+<h3>@i18n["title"]</h3>
+
+@code {
+    I18nText.dashboard i18n = new I18nText.dashboard();
+    protected override async Task OnInitializedAsync()
+    {
+        i18n = await I18nText.GetTextTableAsync<I18nText.dashboard>(this);
+    }
+}
