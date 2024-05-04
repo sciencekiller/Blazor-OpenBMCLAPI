@@ -1,6 +1,20 @@
 ﻿@page "/"
 @inject Toolbelt.Blazor.I18nText.I18nText I18nText
-<h3>@i18n["title"]</h3>
+@using Blazor_OpenBMCLAPI.Core;
+<h3 id="title">@i18n["title"]</h3>
+<Card Style="width:300px">
+    <TitleTemplate>
+        <Icon Type="cloud-server" Theme="outline" />@i18n["status"]
+    </TitleTemplate>
+    <Body>
+        <div>
+            <GridRow>
+                <Icon Type="@Statistics.status.iconType" TwotoneColor="@Statistics.status.color" Theme="@Statistics.status.theme" Width="2em" Height="2em" Spin></Icon>
+                <p style="margin:0px 0px 0px 10px;font-size:18px">@i18n[Statistics.status.statusWord]</p>
+            </GridRow>
+        </div>
+    </Body>
+</Card>
 
 @code {
     I18nText.dashboard i18n = new I18nText.dashboard();

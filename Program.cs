@@ -6,6 +6,7 @@ using System.Globalization;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Blazor_OpenBMCLAPI.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,4 +85,6 @@ app.MapGet("Culture/Set", async (HttpRequest request, [FromQuery] string culture
     return Results.LocalRedirect(redirectUri);
 });
 //</1.3 Add Minimal API>
+Shared.serviceProvider = builder.Services.BuildServiceProvider();
+await Initialize.Run();
 app.Run();
