@@ -1,4 +1,4 @@
-﻿namespace Blazor_OpenBMCLAPI.Core
+﻿namespace Blazor_OpenBMCLAPI.BackEnd
 {
     public class Enums
     {

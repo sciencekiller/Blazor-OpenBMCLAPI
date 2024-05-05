@@ -1,4 +1,4 @@
-﻿namespace Blazor_OpenBMCLAPI.Core.Profile
+﻿namespace Blazor_OpenBMCLAPI.BackEnd.Profile
 {
     public class General
     {

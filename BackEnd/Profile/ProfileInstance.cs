@@ -1,6 +1,6 @@
 ﻿using System.Reflection.Metadata.Ecma335;
 
-namespace Blazor_OpenBMCLAPI.Core.Profile
+namespace Blazor_OpenBMCLAPI.BackEnd.Profile
 {
     public class ProfileInstance
     {

@@ -1,9 +1,9 @@
 ﻿using Blazor_OpenBMCLAPI.Pages;
 using Microsoft.Extensions.DependencyInjection;
-using static Blazor_OpenBMCLAPI.Core.Enums;
+using static Blazor_OpenBMCLAPI.BackEnd.Enums;
 
 
-namespace Blazor_OpenBMCLAPI.Core
+namespace Blazor_OpenBMCLAPI.BackEnd
 {
     public class DisplayStatus
     {
@@ -39,6 +39,20 @@ namespace Blazor_OpenBMCLAPI.Core
                 else
                 {
                     return "outline";
+                }
+            }
+        }
+        public bool spin
+        {
+            get
+            {
+                if (_status == Status.Syncing)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
         }

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="BackEnd\NodeService\" />
     <Folder Include="i18nText\" />
   </ItemGroup>
 

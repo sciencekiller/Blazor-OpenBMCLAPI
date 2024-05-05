@@ -1,6 +1,6 @@
-﻿using static Blazor_OpenBMCLAPI.Core.Enums;
+﻿using static Blazor_OpenBMCLAPI.BackEnd.Enums;
 
-namespace Blazor_OpenBMCLAPI.Core
+namespace Blazor_OpenBMCLAPI.BackEnd
 {
     public static class Statistics
     {

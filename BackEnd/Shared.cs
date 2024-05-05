@@ -1,6 +1,6 @@
-﻿using Blazor_OpenBMCLAPI.Core.Profile;
+﻿using Blazor_OpenBMCLAPI.BackEnd.Profile;
 
-namespace Blazor_OpenBMCLAPI.Core
+namespace Blazor_OpenBMCLAPI.BackEnd
 {
     public static class Shared
     {

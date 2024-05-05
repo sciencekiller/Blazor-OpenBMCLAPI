@@ -6,7 +6,7 @@ using System.Globalization;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Blazor_OpenBMCLAPI.Core;
+using Blazor_OpenBMCLAPI.BackEnd;
 
 var builder = WebApplication.CreateBuilder(args);
 
