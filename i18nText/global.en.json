@@ -1,4 +1,6 @@
 {
   "dashboard": "Dashboard",
-  "settings": "Settings"
+  "settings": "Settings",
+  "profile": "Profile",
+  "cluster": "User information"
 }

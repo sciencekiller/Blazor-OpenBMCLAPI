@@ -8,10 +8,6 @@ namespace Blazor_OpenBMCLAPI.BackEnd
         public static async Task Run()
         {
             Shared.rootDirectory = Directory.GetCurrentDirectory();
-            Shared.profileManager = new ProfileManager();
-#if DEBUG
-            Shared.profileManager=Shared.profileManager.CleanConfig();
-#endif
             //启动的时候应该不会跑着吧
             Statistics.status = new DisplayStatus(Status.Offline);
         }

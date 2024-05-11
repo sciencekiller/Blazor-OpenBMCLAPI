@@ -3,8 +3,8 @@
 @inherits LayoutComponentBase
 
 <AntDesign.ProLayout.BasicLayout Logo="@("https://devblogs.microsoft.com/aspnet/wp-content/uploads/sites/16/2019/04/BrandBlazor_nohalo_1000x.png")"
-    Title="OpenBMCLAPI"
-    MenuData="_menuData">
+                                 Title="OpenBMCLAPI"
+                                 MenuData="_menuData">
     <RightContentRender>
     </RightContentRender>
     <ChildContent>
@@ -27,7 +27,9 @@
     internal void RefreshMenuLanguage()
     {
         _menuData[0].Name = i18n["dashboard"];
-        _menuData[1].Name = i18n["settings"];
+        _menuData[1].Name = i18n["profile"];
+        _menuData[2].Name = i18n["settings"];
+        _menuData[1].Children[0].Name = i18n["cluster"];
     }
     private readonly MenuDataItem[] _menuData =
     {
@@ -37,6 +39,21 @@
             Name = "Dashboard",
             Key = "dashboard",
             Icon = "home",
+        },
+        new MenuDataItem
+        {
+            Name = "Profile",
+            Key = "profile",
+            Icon = "file",
+            Children=new MenuDataItem[]
+            {
+                new MenuDataItem
+                {
+                    Path = "/cluster",
+                    Name = "Cluster",
+                    Key = "cluster"
+                },
+            }
         },
         new MenuDataItem
         {
