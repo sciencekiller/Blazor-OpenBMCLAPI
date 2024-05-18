@@ -1,19 +1,22 @@
 ﻿@page "/cluster"
 @inject Toolbelt.Blazor.I18nText.I18nText I18nText
-<h1 style="font-size:32px">@i18n["cluster"]</h1>
+@using Blazor_OpenBMCLAPI.BackEnd;
+<h1 style="font-size:32px">@i18n["title"]</h1>
 <br/>
 <p style="font-size:14px">@i18n["cluster_intro"]</p>
 
 <GridRow>
     <p>ID:</p>
-    <Input Placeholder="cluster ID" @bind-Value="@cluster_id" DebounceMilliseconds="0" />
+    <Input Placeholder="cluster ID" @bind-Value="@clusterinfo.cluster_id" DebounceMilliseconds="0" />
+    <p>Secret:</p>
+    <InputPassword Placeholder="cluster Secret" @bind-Value="@clusterinfo.cluster_secret" DebounceMilliseconds="0" />
+    <Button Type="@ButtonType.Primary" @onclick="clusterinfo.WriteToSQL">@i18n["save"]</Button>
 </GridRow>
 @code {
-    public string cluster_id{ get; set; }
-    public string cluster_secret { get; set; }
-    I18nText.profile i18n = new I18nText.profile();
+    public ClusterInfo clusterinfo { get; set; } = new ClusterInfo();
+    I18nText.cluster i18n = new I18nText.cluster();
     protected override async Task OnInitializedAsync()
     {
-        i18n = await I18nText.GetTextTableAsync<I18nText.profile>(this);
+        i18n = await I18nText.GetTextTableAsync<I18nText.cluster>(this);
     }
 }

@@ -11,6 +11,7 @@
     <PackageReference Include="AntDesign.ProLayout" Version="0.18.2" />
     <PackageReference Include="SQLite" Version="3.13.0" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
+    <PackageReference Include="System.Data.SQLite.Linq" Version="1.0.118" />
     <PackageReference Include="System.Net.Http.Json" Version="9.0.0-preview.3.24172.9" />
     <PackageReference Include="Toolbelt.Blazor.I18nText" Version="12.0.2" />
     <PackageReference Include="YamlDotNet" Version="15.1.2" />
@@ -39,14 +40,6 @@
 
   <ItemGroup>
     <None Include="E:\Blazor-OpenBMCLAPI\.editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="i18ntext\profile.en.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="i18ntext\profile.zh-CN.json" />
   </ItemGroup>
   
 </Project>

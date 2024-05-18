@@ -15,7 +15,7 @@ namespace Blazor_OpenBMCLAPI.BackEnd
         {
             get
             {
-                switch (_status)
+                switch (status)
                 {
                     case Status.Offline:
                         return "offline";
@@ -32,7 +32,7 @@ namespace Blazor_OpenBMCLAPI.BackEnd
         {
             get
             {
-                if (_status != Status.Syncing)
+                if (status != Status.Syncing)
                 {
                     return "twotone";
                 }
@@ -46,7 +46,7 @@ namespace Blazor_OpenBMCLAPI.BackEnd
         {
             get
             {
-                if (_status == Status.Syncing)
+                if (status == Status.Syncing)
                 {
                     return true;
                 }
@@ -60,7 +60,7 @@ namespace Blazor_OpenBMCLAPI.BackEnd
         {
             get
             {
-                switch (_status)
+                switch (status)
                 {
                     case Status.Syncing:
                         return "#ffff00";
@@ -73,59 +73,42 @@ namespace Blazor_OpenBMCLAPI.BackEnd
                 }
             }
         }
-        private Status? _status;
-        public Status? status
-        {
-            get
-            {
-                return _status;
-            }
-            set
-            {
-                _status = value;
-                switch (value)
-                {
-                    case Status.Online:
-                        _icon_type = "check-circle";
-                        break;
-                    case Status.Offline:
-                        _icon_type = "close-circle";
-                        break;
-                    case Status.Syncing:
-                        _icon_type = "sync";
-                        break;
-                    default:
-                        _icon_type = "question-circle";
-                        break;
-                }
-            }
-        }
-        private string? _icon_type;
+        public Status? status { get; set; }
         public string? iconType
         {
             get
             {
-                return _icon_type;
+                switch (status)
+                {
+                    case Status.Syncing:
+                        return "sync";
+                    case Status.Offline:
+                        return "close-circle";
+                    case Status.Online:
+                        return "check-circle";
+                    default:
+                        return "question-circle";
+                }
             }
-            set
+            /*set
             {
                 _icon_type = value;
                 switch (value)
                 {
                     case "check-circle":
-                        _status = Status.Online;
+                        status = Status.Online;
                         break;
                     case "close-circle":
-                        _status = Status.Offline;
+                        status = Status.Offline;
                         break;
                     case "sync":
-                        _status = Status.Syncing;
+                        status = Status.Syncing;
                         break;
                     default:
-                        _status = Status.Unknown;
+                        status = Status.Unknown;
                         break;
                 }
-            }
+            }*/
         }
     }
 }

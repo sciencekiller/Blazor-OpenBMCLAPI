@@ -1,4 +1,6 @@
 ﻿
+using Blazor_OpenBMCLAPI.BackEnd.SQL;
+
 namespace Blazor_OpenBMCLAPI.BackEnd
 {
     public static class Shared
@@ -17,5 +19,9 @@ namespace Blazor_OpenBMCLAPI.BackEnd
         /// SQL锁，如果有占用SQL读取的线程就会为true
         /// </summary>
         public static bool SQLLock { get; set; } = false;
+        /// <summary>
+        /// SQL管理器的接口
+        /// </summary>
+        public static ISQLManager SQLManager { get; set; }
     }
 }

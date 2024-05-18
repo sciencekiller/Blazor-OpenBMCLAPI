@@ -1,0 +1,5 @@
+﻿{
+  "titler": "用户配置",
+  "cluster_intro": "你需要配置用户id和secret以上线你的节点。",
+  "save": "保存"
+}
