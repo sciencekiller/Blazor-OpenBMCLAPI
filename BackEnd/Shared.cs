@@ -1,5 +1,5 @@
 ﻿
-using Blazor_OpenBMCLAPI.BackEnd.SQL;
+using Blazor_OpenBMCLAPI.BackEnd.Database;
 
 namespace Blazor_OpenBMCLAPI.BackEnd
 {
@@ -16,12 +16,8 @@ namespace Blazor_OpenBMCLAPI.BackEnd
         /// </summary>
         public static IServiceProvider? serviceProvider { get; set; }
         /// <summary>
-        /// SQL锁，如果有占用SQL读取的线程就会为true
-        /// </summary>
-        public static bool SQLLock { get; set; } = false;
-        /// <summary>
         /// SQL管理器的接口
         /// </summary>
-        public static ISQLManager SQLManager { get; set; }
+        public static IDatabase Database { get; set; }
     }
 }

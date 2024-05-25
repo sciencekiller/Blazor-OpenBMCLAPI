@@ -1,4 +1,4 @@
-﻿using Blazor_OpenBMCLAPI.BackEnd.SQL;
+﻿using Blazor_OpenBMCLAPI.BackEnd.Database;
 using System.Text;
 using static Blazor_OpenBMCLAPI.BackEnd.Enums;
 
@@ -14,8 +14,12 @@ namespace Blazor_OpenBMCLAPI.BackEnd
             //寻找db.json文件
             if (!File.Exists(Path.Combine(Shared.rootDirectory, "db.json")))
             {
-                Shared.SQLManager = new SQLite();
+                Shared.Database = new SQLiteDatabase();
             }
+            //初始化db
+            var sql = Shared.Database;
+            await sql.Init();
+
         }
     }
 }

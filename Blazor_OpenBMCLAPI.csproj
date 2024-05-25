@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="BackEnd\NodeService\" />
-    <Folder Include="i18nText\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +39,14 @@
 
   <ItemGroup>
     <None Include="E:\Blazor-OpenBMCLAPI\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="i18nText\auth.zh-CN.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="i18nText\auth.en.json" />
   </ItemGroup>
   
 </Project>

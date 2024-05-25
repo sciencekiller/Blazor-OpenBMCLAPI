@@ -1,16 +1,17 @@
 ﻿@page "/cluster"
 @inject Toolbelt.Blazor.I18nText.I18nText I18nText
+@inject INotificationService _notice
 @using Blazor_OpenBMCLAPI.BackEnd;
 <h1 style="font-size:32px">@i18n["title"]</h1>
-<br/>
+<p></p>
 <p style="font-size:14px">@i18n["cluster_intro"]</p>
 
 <GridRow>
     <p>ID:</p>
-    <Input Placeholder="cluster ID" @bind-Value="@clusterinfo.cluster_id" DebounceMilliseconds="0" />
+    <Input Placeholder="cluster ID" @bind-Value="@clusterinfo.cluster_id" DebounceMilliseconds="0" @oninput="Save"/>
     <p>Secret:</p>
-    <InputPassword Placeholder="cluster Secret" @bind-Value="@clusterinfo.cluster_secret" DebounceMilliseconds="0" />
-    <Button Type="@ButtonType.Primary" @onclick="clusterinfo.WriteToSQL">@i18n["save"]</Button>
+    <InputPassword Placeholder="cluster Secret" @bind-Value="@clusterinfo.cluster_secret" DebounceMilliseconds="0" @oninput="Save"/>
+    <Button Type="@ButtonType.Primary" @onclick="Save" Style="margin-left:auto;margin-top:10px">@i18n["save"]</Button>
 </GridRow>
 @code {
     public ClusterInfo clusterinfo { get; set; } = new ClusterInfo();
@@ -18,5 +19,15 @@
     protected override async Task OnInitializedAsync()
     {
         i18n = await I18nText.GetTextTableAsync<I18nText.cluster>(this);
+    }
+    internal async Task Save()
+    {
+        RenderFragment customIcon = @<Icon Type="check-circle" Theme="outline" Style="color:limegreen"></Icon>;
+        await _notice.Open(new NotificationConfig()
+            {
+                Message = i18n["saved"],
+                Description = i18n["saved_intro"],
+                Icon = customIcon
+        });
     }
 }

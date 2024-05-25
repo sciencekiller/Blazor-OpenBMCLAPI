@@ -1,5 +1,6 @@
 ﻿@namespace Blazor_OpenBMCLAPI
 @inject Toolbelt.Blazor.I18nText.I18nText I18nText
+@inject NavigationManager NavigationManager
 @inherits LayoutComponentBase
 
 <AntDesign.ProLayout.BasicLayout Logo="@("https://devblogs.microsoft.com/aspnet/wp-content/uploads/sites/16/2019/04/BrandBlazor_nohalo_1000x.png")"
@@ -20,6 +21,8 @@
     I18nText.global i18n = new I18nText.global();
     protected override async Task OnInitializedAsync()
     {
+        Trace.WriteLine(await Shared.Database.CheckUser());
+        if (!await Shared.Database.CheckUser()) NavigationManager.NavigateTo("/Login", true);
         i18n = await I18nText.GetTextTableAsync<I18nText.global>(this);
         RefreshMenuLanguage();
 

@@ -1,0 +1,9 @@
+﻿@page "/login"
+@inject Toolbelt.Blazor.I18nText.I18nText I18nText
+@code {
+    I18nText.auth i18n = new I18nText.auth();
+    protected override async Task OnInitializedAsync()
+    {
+        i18n = await I18nText.GetTextTableAsync<I18nText.auth>(this);
+    }
+}
