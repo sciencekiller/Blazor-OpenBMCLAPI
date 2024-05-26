@@ -4,5 +4,14 @@
   "unauth_intro": "您当前尚未登录，但您正在访问的页面需要管理员权限，因此请先登录。",
   "back_home": "回到首页",
   "notfound_title": "糟糕！未找到页面",
-  "notfound_intro": "我们非常抱歉，但是我们无法找到您正在访问的页面，请稍等片刻，或与管理员联系。"
+  "notfound_intro": "我们非常抱歉，但是我们无法找到您正在访问的页面，请稍等片刻，或与管理员联系。",
+  "register_title": "创建账户",
+  "register_intro": "您正在创建一个用户。这个用户一旦创建，将可以全权操作节点，包括访问存储敏感信息，请谨慎操作。",
+  "username": "用户名",
+  "password": "密码",
+  "invalid_title": "用户名或密码无效",
+  "invalid_intro": "您输入的用户名或密码无效，这可能是因为您没有输入，因为用户名或密码没有限制。",
+  "login_failed_title": "登录失败",
+  "login_failed_intro": "我们无法在数据库找到符合要求的用户，请检查你的输入。",
+  "confirm": "确认"
 }

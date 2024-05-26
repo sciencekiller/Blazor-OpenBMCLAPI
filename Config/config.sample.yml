@@ -1,6 +1,0 @@
-#Don't remove this file! It's a part of the program!
-#不要删除这个文件！这是程序的一部分！
-General:
-  ClusterID: "" #你的ID，请找bangbang93要
-  ClusterSecret: "" #你的Secret，请找bangbang93要
-  DownloadThreads: 32 #下载线程数，依服务器性能配置

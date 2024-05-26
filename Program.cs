@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using System.Globalization;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 using Toolbelt.Blazor.I18nText;
+using CookieAuthenticationEvents = Blazor_OpenBMCLAPI.BackEnd.CookieAuthenticationEvents;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -23,12 +24,6 @@ builder.Services.AddI18nText(options =>
     options.GetInitialLanguageAsync = (_, _) => ValueTask.FromResult(CultureInfo.CurrentUICulture.Name);
 });
 builder.Services.AddControllers();
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-        .AddCookie(options =>
-        {
-            options.Cookie.Name = "blazoropenbmclapi";
-            options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
-        });
 
 //</4.1 Add Toolbelt>
 
@@ -50,7 +45,15 @@ builder.Services.AddScoped(sp => new HttpClient
     BaseAddress = new Uri(sp.GetService<NavigationManager>()!.BaseUri)
 });
 builder.Services.Configure<ProSettings>(builder.Configuration.GetSection("ProSettings"));
-
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
+        {
+            options.Cookie.Name = "bmclapi";
+            options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
+            options.EventsType = typeof(CookieAuthenticationEvents);    // <---
+        });
+// Add this new line
+builder.Services.AddScoped<CookieAuthenticationEvents>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

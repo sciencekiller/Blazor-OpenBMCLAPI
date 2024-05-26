@@ -4,5 +4,14 @@
   "unauth_intro": "You are not currently logged in, but the page you are visiting requires administrator privileges, so please log in first.",
   "back_home": "Back home",
   "notfound_title": "Oops! The page you are visiting is not exists",
-  "notfound_intro": "We're sorry, but we can't find the page you're visiting, please wait a moment, or contact the admin."
+  "notfound_intro": "We're sorry, but we can't find the page you're visiting, please wait a moment, or contact the admin.",
+  "register_title": "Register",
+  "register_intro": "You are creating a user. Once created, this user will have full authority to operate the node, including access to and store sensitive information, so please be cautious.",
+  "username": "User name:",
+  "password": "Password",
+  "invalid_title": "User name or password is invalid",
+  "invalid_intro": "The username or password you entered is invalid, this may be because you didn't enter it, because there is no limit to the username or password.",
+  "login_failed_title": "Login failed",
+  "login_failed_intro": "We can't find a user in the database who matches the requirements, please check your input.",
+  "confirm" : "OK"
 }

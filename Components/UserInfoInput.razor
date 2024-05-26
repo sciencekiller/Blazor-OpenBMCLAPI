@@ -1,0 +1,66 @@
+﻿@inject Toolbelt.Blazor.I18nText.I18nText I18nText
+@inject INotificationService _notice
+@inject IJSRuntime JSRunTime
+
+<p Style="display:inline-block">@i18n["username"] : </p>
+<Input Placeholder=@i18n["username"] @bind-Value="@userInfo.userName" DebounceMilliseconds="0" Style="display:inline-block" />
+<br/>
+<p Style="display:inline-block">@i18n["password"] : </p>
+<InputPassword Placeholder=@i18n["password"] @bind-Value="@userInfo.password" DebounceMilliseconds="0" Style="display:inline-block" />
+<Button Type="@ButtonType.Primary" Style="display: flex;align-items: center;justify-content: center;margin-top: 10px;" @onclick="Save">
+    @i18n["confirm"]
+</Button>
+
+@code {
+    [Parameter]
+    public string inputType { get; set; }
+
+    public UserInfo userInfo { get; set; } = new();
+    I18nText.auth i18n = new I18nText.auth();
+    protected override async Task OnInitializedAsync()
+    {
+        i18n = await I18nText.GetTextTableAsync<I18nText.auth>(this);
+    }
+    private async Task Save()
+    {
+        if (inputType == "register")
+        {
+            if (string.IsNullOrWhiteSpace(userInfo.userName) || string.IsNullOrWhiteSpace(userInfo.password))
+            {
+                RenderFragment customIcon = @<Icon Type="close-circle" Theme="outline" Style="color:red"></Icon>;
+                await _notice.Open(new NotificationConfig()
+                    {
+                        Message = i18n["invalid_title"],
+                        Description = i18n["invalid_intro"],
+                        Icon = customIcon
+                    });
+            }
+            else
+            {
+                await Shared.Database.CreateUser(userInfo.userName, userInfo.password);
+                var authModule = await JSRunTime.InvokeAsync<IJSObjectReference>("import", "./js/auth.js");
+                await authModule.InvokeVoidAsync("SignIn", userInfo.userName, userInfo.password, "/");
+
+            }
+        }
+        else
+        {
+            if (await Shared.Database.AuthUser(userInfo.userName, userInfo.password))
+            {
+                var authModule = await JSRunTime.InvokeAsync<IJSObjectReference>("import", "./js/auth.js");
+                await authModule.InvokeVoidAsync("SignIn", userInfo.userName, userInfo.password, "/");
+                Trace.WriteLine("Send: " + userInfo.userName + "," + userInfo.password);
+            }
+            else
+            {
+                RenderFragment customIcon = @<Icon Type="close-circle" Theme="outline" Style="color:red"></Icon>;
+                await _notice.Open(new NotificationConfig()
+                    {
+                        Message = i18n["login_failed_title"],
+                        Description = i18n["login_failed_intro"],
+                        Icon = customIcon
+                    });
+            }
+        }
+    }
+}

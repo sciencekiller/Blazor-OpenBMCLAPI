@@ -20,7 +20,6 @@
     I18nText.global i18n = new I18nText.global();
     protected override async Task OnInitializedAsync()
     {
-        Trace.WriteLine(await Shared.Database.CheckUser());
         i18n = await I18nText.GetTextTableAsync<I18nText.global>(this);
         RefreshMenuLanguage();
 

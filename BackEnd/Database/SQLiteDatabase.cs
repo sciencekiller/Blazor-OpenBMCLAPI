@@ -16,7 +16,7 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
             await connection.OpenAsync();
             //创建表
             await ExecuteNonQuery("create table if not exists clusters(id text not null, secret text not null)");
-            await ExecuteNonQuery("create table if not exists users(name text not null, password text not null, root text)");
+            await ExecuteNonQuery("create table if not exists users(name text not null, password text not null)");
         }
         #region Execute commands
         private async Task ExecuteNonQuery(string sql)
@@ -63,13 +63,13 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
             }
             return clusterInfoList;
         }
-        public async Task<bool> CheckUser()
+        public async Task<bool> IsUserExist()
         {
-            DbDataReader reader = await ExecuteQuery("select * from clusters");
+            DbDataReader reader = await ExecuteQuery("select * from users");
             if (!reader.Read()) return false;
             return true;
         }
-        public async Task CreateUser(string userName,string password,bool isRoot)
+        public async Task CreateUser(string userName,string password)
         {
             MD5 md5 = MD5.Create();
             byte[] passwordbyte=Encoding.UTF8.GetBytes(password);
@@ -78,15 +78,11 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
             byte[] namebyte=Encoding.UTF8.GetBytes(userName);
             result=md5.ComputeHash(namebyte);
             userName = BitConverter.ToString(result).Replace("-", "");
-            string root;
-            if (isRoot) root = "1";
-            else root = "0";
-            string sql = "insert into users (name, password, root) values (@name, @password, @root)";
+            string sql = "insert into users (name, password) values (@name, @password)";
             SQLiteParameter[] parameters =
             {
                 new SQLiteParameter("@name",userName),
-                new SQLiteParameter("@password",password),
-                new SQLiteParameter("@root",root)
+                new SQLiteParameter("@password",password)
             };
             await ExecuteNonQuery(sql, parameters);
         }

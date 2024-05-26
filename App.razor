@@ -1,10 +1,9 @@
-@inject NavigationManager NavigationManager
 <Microsoft.AspNetCore.Components.Authorization.CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Program).Assembly">
         <Found Context="routeData">
             <Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(BasicLayout)">
                 <NotAuthorized>
-                    <Blazor_OpenBMCLAPI.Pages.Unauth/>
+                    <Blazor_OpenBMCLAPI.Components.Unauth/>
                 </NotAuthorized>
                 <Authorizing>
                     <h1>Authoring</h1>
@@ -14,7 +13,7 @@
         </Found>
         <NotFound>
             <LayoutView Layout="@typeof(BasicLayout)">
-                <Blazor_OpenBMCLAPI.Pages.NotFound/>
+                <Blazor_OpenBMCLAPI.Components.NotFound/>
             </LayoutView>
         </NotFound>
     </Router>

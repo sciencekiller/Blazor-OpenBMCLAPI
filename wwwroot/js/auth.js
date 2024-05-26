@@ -1,4 +1,8 @@
-﻿export function SignIn(name, password, redirect) {
+﻿/*
+ * Call the Authentication API
+ */
+
+export function SignIn(email, password, redirect) {
 
     var url = "/api/auth/signin";
     var xhr = new XMLHttpRequest();
@@ -20,7 +24,7 @@
 
     // Data to send
     var data = {
-        name: name,
+        email: email,
         password: password
     };
 
