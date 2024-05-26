@@ -11,7 +11,8 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
         private SQLiteConnection connection;
         public async Task Init()
         {
-            connection = new SQLiteConnection("Data Source=stastics.db;Version=3;");
+
+            connection = new SQLiteConnection(string.Format("Data Source={0};Version=3;",Path.Combine(Shared.rootDirectory,"statistics.db")));
             await connection.OpenAsync();
             //创建表
             await ExecuteNonQuery("create table if not exists clusters(id text not null, secret text not null)");
