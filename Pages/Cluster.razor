@@ -1,4 +1,5 @@
 ﻿@page "/cluster"
+@attribute [Authorize]
 @inject Toolbelt.Blazor.I18nText.I18nText I18nText
 @inject INotificationService _notice
 @using Blazor_OpenBMCLAPI.BackEnd;
@@ -14,6 +15,7 @@
     <Button Type="@ButtonType.Primary" @onclick="Save" Style="margin-left:auto;margin-top:10px">@i18n["save"]</Button>
 </GridRow>
 @code {
+    
     public ClusterInfo clusterinfo { get; set; } = new ClusterInfo();
     I18nText.cluster i18n = new I18nText.cluster();
     protected override async Task OnInitializedAsync()

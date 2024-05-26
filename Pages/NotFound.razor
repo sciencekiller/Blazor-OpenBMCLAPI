@@ -1,0 +1,25 @@
+﻿@inject Toolbelt.Blazor.I18nText.I18nText I18nText
+@inject NavigationManager NavigationManager
+<Result Status="404"
+        Title=@i18n["notfound_title"]
+        SubTitle=@i18n["notfound_intro"]
+        Extra="extra" />
+
+@code {
+    I18nText.auth i18n = new I18nText.auth();
+    RenderFragment extra;
+    protected override async Task OnInitializedAsync()
+    {
+        i18n = await I18nText.GetTextTableAsync<I18nText.auth>(this);
+        extra = (RenderTreeBuilder __builder) =>
+        {
+            <div>
+                <Button Type=@ButtonType.Primary Style="display:inline-block" @onclick="NavigateToHome">@i18n["back_home"]</Button>
+            </div>
+        };
+    }
+    private void NavigateToHome()
+    {
+        NavigationManager.NavigateTo("/", true);
+    }
+}

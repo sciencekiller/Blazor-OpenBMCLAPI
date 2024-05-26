@@ -1,3 +1,8 @@
 {
-  "login": "登录"
+  "login_title": "登录",
+  "unauth_title": "糟糕！您尚未登录",
+  "unauth_intro": "您当前尚未登录，但您正在访问的页面需要管理员权限，因此请先登录。",
+  "back_home": "回到首页",
+  "notfound_title": "糟糕！未找到页面",
+  "notfound_intro": "我们非常抱歉，但是我们无法找到您正在访问的页面，请稍等片刻，或与管理员联系。"
 }

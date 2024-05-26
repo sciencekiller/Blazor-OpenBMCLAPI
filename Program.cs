@@ -1,15 +1,18 @@
-using Microsoft.AspNetCore.Components;
 using AntDesign.ProLayout;
-using Toolbelt.Blazor.I18nText;
+using Blazor_OpenBMCLAPI.BackEnd;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.Extensions.Options;
 using System.Globalization;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Blazor_OpenBMCLAPI.BackEnd;
+using Toolbelt.Blazor.I18nText;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
@@ -19,6 +22,14 @@ builder.Services.AddI18nText(options =>
     options.PersistanceLevel = PersistanceLevel.None;
     options.GetInitialLanguageAsync = (_, _) => ValueTask.FromResult(CultureInfo.CurrentUICulture.Name);
 });
+builder.Services.AddControllers();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
+        {
+            options.Cookie.Name = "blazoropenbmclapi";
+            options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
+        });
+
 //</4.1 Add Toolbelt>
 
 //<1.1 Add Localization>
@@ -62,7 +73,8 @@ if (localizationOptions != null)
     app.UseRequestLocalization(localizationOptions.Value);
 }
 //</1.2 Configure RequestLocalization>
-
+app.UseAuthentication();
+app.MapControllers();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 

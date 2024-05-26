@@ -1,13 +1,22 @@
-<Router AppAssembly="@typeof(Program).Assembly">
-    <Found Context="routeData">
-        <CascadingValue Value="routeData">
-            <RouteView RouteData="@routeData" DefaultLayout="@typeof(BasicLayout)" />
-        </CascadingValue>
-    </Found>
-    <NotFound>
-        <LayoutView Layout="@typeof(BasicLayout)">
-            <p>Sorry, there's nothing at this address.</p>
-        </LayoutView>
-    </NotFound>
-</Router>
-<AntContainer />
+@inject NavigationManager NavigationManager
+<Microsoft.AspNetCore.Components.Authorization.CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(Program).Assembly">
+        <Found Context="routeData">
+            <Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(BasicLayout)">
+                <NotAuthorized>
+                    <Blazor_OpenBMCLAPI.Pages.Unauth/>
+                </NotAuthorized>
+                <Authorizing>
+                    <h1>Authoring</h1>
+                </Authorizing>
+            </Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView>
+
+        </Found>
+        <NotFound>
+            <LayoutView Layout="@typeof(BasicLayout)">
+                <Blazor_OpenBMCLAPI.Pages.NotFound/>
+            </LayoutView>
+        </NotFound>
+    </Router>
+    <AntContainer />
+</Microsoft.AspNetCore.Components.Authorization.CascadingAuthenticationState>

@@ -1,3 +1,8 @@
 {
-  "login": "Login",
+  "login_title": "Login",
+  "unauth_title": "Oops! You are not logged in",
+  "unauth_intro": "You are not currently logged in, but the page you are visiting requires administrator privileges, so please log in first.",
+  "back_home": "Back home",
+  "notfound_title": "Oops! The page you are visiting is not exists",
+  "notfound_intro": "We're sorry, but we can't find the page you're visiting, please wait a moment, or contact the admin."
 }
