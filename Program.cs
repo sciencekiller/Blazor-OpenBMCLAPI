@@ -11,7 +11,6 @@ using Microsoft.Extensions.Options;
 using System.Globalization;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 using Toolbelt.Blazor.I18nText;
-using CookieAuthenticationEvents = Blazor_OpenBMCLAPI.BackEnd.CookieAuthenticationEvents;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -50,10 +49,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         {
             options.Cookie.Name = "bmclapi";
             options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
-            options.EventsType = typeof(CookieAuthenticationEvents);    // <---
         });
-// Add this new line
-builder.Services.AddScoped<CookieAuthenticationEvents>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

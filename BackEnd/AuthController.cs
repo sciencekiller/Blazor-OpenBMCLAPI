@@ -22,6 +22,9 @@ namespace Blazor_OpenBMCLAPI.BackEnd
         [Route("api/auth/signin")]
         public async Task<ActionResult> SignInPost(SigninData value)
         {
+            if(!await Shared.Database.AuthUser(value.Email, value.Password+"saltwood")) {
+                return Forbid();
+            }
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, value.Email),
@@ -36,7 +39,7 @@ namespace Blazor_OpenBMCLAPI.BackEnd
                                           new ClaimsPrincipal(claimsIdentity),
                                           authProperties);
 
-            return this.Ok();
+            return Ok();
         }
 
         /// <summary />
@@ -45,7 +48,7 @@ namespace Blazor_OpenBMCLAPI.BackEnd
         public async Task<ActionResult> SignOutPost()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return this.Ok();
+            return Ok();
         }
     }
 

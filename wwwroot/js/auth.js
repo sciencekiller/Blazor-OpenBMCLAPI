@@ -55,3 +55,35 @@ export function SignOut(redirect) {
     // Call API
     xhr.send();
 }
+export async function Login(email,password,redirect) {
+    try {
+        const response = await fetch('/api/auth/signin', {
+            method: 'POST',
+            body: JSON.stringify({
+                Email: email,
+                Password: password,
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to sign in');
+        }
+        if (redirect)
+            location.replace(redirect);
+        const data = await response.json();
+
+        const { success, message } = data;
+
+        if (!success) {
+            throw new Error(message);
+        }
+
+        console.log('Sign in successful');
+
+    } catch (error) {
+        console.error(error);
+    }
+}

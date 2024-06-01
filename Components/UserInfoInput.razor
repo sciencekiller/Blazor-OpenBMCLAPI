@@ -37,7 +37,8 @@
             }
             else
             {
-                await Shared.Database.CreateUser(userInfo.userName, userInfo.password);
+                //本来应该是加盐，但是加个盐木也是一样的对吧:)
+                await Shared.Database.CreateUser(userInfo.userName, userInfo.password+"saltwood");
                 var authModule = await JSRunTime.InvokeAsync<IJSObjectReference>("import", "./js/auth.js");
                 await authModule.InvokeVoidAsync("SignIn", userInfo.userName, userInfo.password, "/");
 
@@ -45,11 +46,10 @@
         }
         else
         {
-            if (await Shared.Database.AuthUser(userInfo.userName, userInfo.password))
+            if (await Shared.Database.AuthUser(userInfo.userName, userInfo.password+"saltwood"))
             {
                 var authModule = await JSRunTime.InvokeAsync<IJSObjectReference>("import", "./js/auth.js");
                 await authModule.InvokeVoidAsync("SignIn", userInfo.userName, userInfo.password, "/");
-                Trace.WriteLine("Send: " + userInfo.userName + "," + userInfo.password);
             }
             else
             {
@@ -63,4 +63,5 @@
             }
         }
     }
+
 }

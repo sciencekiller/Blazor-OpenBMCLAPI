@@ -2,5 +2,11 @@
   "dashboard": "数据面板",
   "settings": "设置",
   "profile": "配置",
-  "cluster": "用户配置"
+  "cluster": "用户配置",
+  "hello": "你好, ",
+  "unauth": "未登录",
+  "login_title": "登录",
+  "login_intro": "您当前未登录。您可以按下面的链接登录，否则您将无法访问某些页面。",
+  "logout_title": "登出",
+  "logout_intro": "您当前已登录。如果您想注销并清除cookie，请单击下面的链接。"
 }

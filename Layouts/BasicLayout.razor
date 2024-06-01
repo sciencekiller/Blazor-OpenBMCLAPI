@@ -1,13 +1,16 @@
 ﻿@namespace Blazor_OpenBMCLAPI
 @inject Toolbelt.Blazor.I18nText.I18nText I18nText
 @inherits LayoutComponentBase
+@inject IJSRuntime JSRunTime
+@inject NavigationManager NavigationManager
 
 <AntDesign.ProLayout.BasicLayout Logo="@("https://devblogs.microsoft.com/aspnet/wp-content/uploads/sites/16/2019/04/BrandBlazor_nohalo_1000x.png")"
                                  Title="OpenBMCLAPI"
-                                 MenuData="_menuData">
+                                 MenuData="_menuData" HeaderContentRender="extra">
     <RightContentRender>
     </RightContentRender>
     <ChildContent>
+
         @Body
     </ChildContent>
     <FooterRender>
@@ -18,11 +21,53 @@
 
 @code {
     I18nText.global i18n = new I18nText.global();
+    RenderFragment extra, _content_auth,_content_unauth;
     protected override async Task OnInitializedAsync()
     {
         i18n = await I18nText.GetTextTableAsync<I18nText.global>(this);
         RefreshMenuLanguage();
-
+        _content_auth =
+        (RenderTreeBuilder __builder) =>
+            {
+                <div>
+                    <p>@i18n["logout_intro"]</p>
+                    <Button Type="@ButtonType.Link" @onclick="SignOut">@i18n["logout_title"]</Button>
+                </div>
+            };
+        _content_unauth =
+    (RenderTreeBuilder __builder) =>
+        {
+            <div>
+                <p>@i18n["login_intro"]</p>
+                <Button Type="@ButtonType.Link" @onclick="SignIn">@i18n["login_title"]</Button>
+            </div>
+        };
+        extra = (RenderTreeBuilder __builder) =>
+        {
+            <div>
+                <AuthorizeView>
+                    <Authorized>
+                        <Popover Placement="@Placement.BottomLeft" ContentTemplate="@_content_auth" Title=@i18n["logout_title"] Trigger="@(new AntDesign.Trigger[] { AntDesign.Trigger.Click})" >
+                            <Avatar Style="background-color: #87d068">@context.User.Identity.Name[0]</Avatar>
+                        </Popover>
+                    </Authorized>
+                    <NotAuthorized>
+                        <Popover Placement="@Placement.BottomLeft" ContentTemplate="@_content_unauth" Title=@i18n["login_title"] Trigger="@(new AntDesign.Trigger[] { AntDesign.Trigger.Click})">
+                            <Avatar Style="background-color: #87d068" Icon="User"></Avatar>
+                        </Popover>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+        };
+    }
+    private async Task SignOut()
+    {
+        var authModule = await JSRunTime.InvokeAsync<IJSObjectReference>("import", "./js/auth.js");
+        await authModule.InvokeVoidAsync("SignOut", "/");
+    }
+    private async Task SignIn()
+    {
+        NavigationManager.NavigateTo("/login", true);
     }
     internal void RefreshMenuLanguage()
     {
@@ -61,7 +106,7 @@
             Name = "Settings",
             Key = "settings",
             Icon = "setting",
-        }
+        },
     };
 
     public LinkItem[] Links { get; set; } =

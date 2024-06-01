@@ -105,5 +105,21 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
             if(!reader.Read()) return false;
             return true;
         }
+        public async Task<bool> AuthUser(string userName)
+        {
+
+            MD5 md5 = MD5.Create();
+            byte[] namebyte = Encoding.UTF8.GetBytes(userName);
+            byte[] result = md5.ComputeHash(namebyte);
+            userName = BitConverter.ToString(result).Replace("-", "");
+            string sql = "select * from users where name=@name";
+            SQLiteParameter[] parameters =
+            {
+                new SQLiteParameter("@name",userName)
+            };
+            DbDataReader reader = await ExecuteQuery(sql, parameters);
+            if (!reader.Read()) return false;
+            return true;
+        }
     }
 }
