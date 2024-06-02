@@ -95,6 +95,7 @@ app.MapGet("Culture/Set", async (HttpRequest request, [FromQuery] string culture
 
     return Results.LocalRedirect(redirectUri);
 });
+app.UseMiddleware<InvalidateSessionMiddleware>();
 //</1.3 Add Minimal API>
 Shared.serviceProvider = builder.Services.BuildServiceProvider();
 await Initialize.Run();
