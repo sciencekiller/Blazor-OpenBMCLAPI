@@ -6,22 +6,27 @@
 <h1 style="font-size:32px">@i18n["title"]</h1>
 <p></p>
 <p style="font-size:14px">@i18n["cluster_intro"]</p>
-
-<GridRow>
-    <p>ID:</p>
-    <Input Placeholder="cluster ID" @bind-Value="@clusterinfo.cluster_id" DebounceMilliseconds="0" @oninput="Save"/>
-    <p>Secret:</p>
-    <InputPassword Placeholder="cluster Secret" @bind-Value="@clusterinfo.cluster_secret" DebounceMilliseconds="0" @oninput="Save"/>
-    <Button Type="@ButtonType.Primary" @onclick="Save" Style="margin-left:auto;margin-top:10px">@i18n["save"]</Button>
-</GridRow>
+<Button Style="margin-left:auto" @onclick="AddCluster">@i18n["add"]</Button>
+<Table TItem="ICluster" DataSource="@clusterinfo">
+    <PropertyColumn Property="c=>c.cluster_id" Title="Cluster ID"></PropertyColumn>
+    <PropertyColumn Property="c=>c.cluster_secret" Title="Cluster Secret"></PropertyColumn>
+    <ActionColumn Title="Action">
+        <Space Size=@("middle")>
+            <SpaceItem>
+                <a>Delete</a>
+            </SpaceItem>
+        </Space>
+    </ActionColumn>
+</Table>
 @code {
-    
-    public ClusterInfo clusterinfo { get; set; } = new ClusterInfo();
+    public List<ClusterInfo> clusterinfo = new();
     I18nText.cluster i18n = new I18nText.cluster();
     protected override async Task OnInitializedAsync()
     {
         i18n = await I18nText.GetTextTableAsync<I18nText.cluster>(this);
+        clusterinfo = await Shared.Database.GetClusters();
     }
+
     internal async Task Save()
     {
         RenderFragment customIcon = @<Icon Type="check-circle" Theme="outline" Style="color:limegreen"></Icon>;
@@ -30,6 +35,10 @@
                 Message = i18n["saved"],
                 Description = i18n["saved_intro"],
                 Icon = customIcon
-        });
+            });
+    }
+    public async Task AddCluster()
+    {
+
     }
 }

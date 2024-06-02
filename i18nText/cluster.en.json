@@ -3,5 +3,6 @@
   "cluster_intro": "You need to configure the user ID and secret to bring your node online.",
   "save": "Save",
   "saved": "Yep! All the cluster changes has been saved~",
-  "saved_intro": "The changes you had already made have been successfully write in the database, you can leave this page without doing anything."
+  "saved_intro": "The changes you had already made have been successfully write in the database, you can leave this page without doing anything.",
+  "add": "Add"
 }
