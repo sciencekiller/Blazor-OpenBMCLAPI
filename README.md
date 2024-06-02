@@ -1,3 +1,3 @@
 # Blazor_OpenBMCLAPI
 > [!IMPORTANT]
-> ±¾²Ö¿â²¿·Ö´úÂëÓÉChatGPTÉú³É£¬ÔÚ´úÂëÖÐÒÑ¾­±íÃ÷
+> æœ¬ä»“åº“éƒ¨åˆ†ä»£ç ç”±ChatGPTç”Ÿæˆï¼Œåœ¨ä»£ç ä¸­å·²ç»æ ‡æ˜Ž
