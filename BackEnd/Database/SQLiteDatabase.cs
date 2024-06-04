@@ -15,7 +15,6 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
             connection = new SQLiteConnection(string.Format("Data Source={0};Version=3;",Path.Combine(Shared.rootDirectory,"statistics.db")));
             await connection.OpenAsync();
             //创建表
-            await ExecuteNonQuery("create table if not exists clusters(id text not null, secret text not null)");
             await ExecuteNonQuery("create table if not exists users(name text not null, password text not null)");
         }
         #region Execute commands
@@ -50,10 +49,10 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
             }
         }
         #endregion
-        public async Task<List<ClusterInfo>> GetClusters()
+        public async Task<List<ClusterInfo>> GetClusters(string userName)
         {
             List<ClusterInfo> clusterInfoList = new();
-            DbDataReader reader = await ExecuteQuery("select * from clusters");
+            DbDataReader reader = await ExecuteQuery(string.Format("select * from {0}_clusters",userName));
             while (reader.Read())
             {
                 ClusterInfo clusterInfo = new ClusterInfo();
@@ -71,6 +70,7 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
         }
         public async Task CreateUser(string userName,string password)
         {
+            await ExecuteNonQuery(string.Format("create table if not exists {0}_clusters(id text not null, secret text not null)", userName));
             MD5 md5 = MD5.Create();
             byte[] passwordbyte=Encoding.UTF8.GetBytes(password);
             byte[] result= md5.ComputeHash(passwordbyte);
@@ -85,6 +85,8 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
                 new SQLiteParameter("@password",password)
             };
             await ExecuteNonQuery(sql, parameters);
+            //创建该用户的表
+            
         }
         public async Task<bool> AuthUser(string userName,string password)
         {

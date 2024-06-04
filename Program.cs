@@ -14,6 +14,7 @@ using Toolbelt.Blazor.I18nText;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddAntDesign();
@@ -50,6 +51,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
             options.Cookie.Name = "bmclapi";
             options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
         });
+builder.Services.AddScoped<UserService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

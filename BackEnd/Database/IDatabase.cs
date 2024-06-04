@@ -3,7 +3,7 @@
     public interface IDatabase
     {
         public Task Init();
-        public Task<List<ClusterInfo>> GetClusters();
+        public Task<List<ClusterInfo>> GetClusters(string userName);
         public Task<bool> IsUserExist();
         public Task<bool> AuthUser(string userName,string password);
         public Task<bool> AuthUser(string userName);
