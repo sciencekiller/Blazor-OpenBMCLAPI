@@ -10,7 +10,7 @@
   "username": "用户名",
   "password": "密码",
   "invalid_title": "用户名或密码无效",
-  "invalid_intro": "您输入的用户名或密码无效，这可能是因为您没有输入，因为用户名或密码没有限制。",
+  "invalid_intro": "您输入的用户名或密码无效，这有可能是因为您没有输入，也可能是因为这个用户名已经被使用过。",
   "login_failed_title": "登录失败",
   "login_failed_intro": "我们无法在数据库找到符合要求的用户，请检查你的输入。",
   "confirm": "确认"

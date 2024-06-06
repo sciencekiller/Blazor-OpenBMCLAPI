@@ -8,5 +8,6 @@
         public Task<bool> AuthUser(string userName,string password);
         public Task<bool> AuthUser(string userName);
         public Task CreateUser(string userName,string password);
+        public Task AddCluster(string userName,string clusterName,string clusterSecret);
     }
 }

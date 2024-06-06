@@ -10,8 +10,8 @@
   "username": "User name:",
   "password": "Password",
   "invalid_title": "User name or password is invalid",
-  "invalid_intro": "The username or password you entered is invalid, this may be because you didn't enter it, because there is no limit to the username or password.",
+  "invalid_intro": "The username or password you entered is invalid, either because you didn't enter it or because the username has already been used.",
   "login_failed_title": "Login failed",
   "login_failed_intro": "We can't find a user in the database who matches the requirements, please check your input.",
-  "confirm" : "OK"
+  "confirm": "OK"
 }

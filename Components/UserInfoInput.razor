@@ -2,11 +2,13 @@
 @inject INotificationService _notice
 @inject IJSRuntime JSRunTime
 
-<p Style="display:inline-block">@i18n["username"] : </p>
-<Input Placeholder=@i18n["username"] @bind-Value="@userInfo.userName" DebounceMilliseconds="0" Style="display:inline-block" />
+@* <p Style="display:inline-block">@i18n["username"] : </p>
+<Input Placeholder=@i18n["username"] @bind-Value="@userInfo.userName" DebounceMilliseconds="0" Style="display:inline-block" /> *@
+<InputChunk @bind-Value="@userInfo.userName" placeHolder="@i18n["username"]" tip="@i18n["username"]" />
 <br/>
-<p Style="display:inline-block">@i18n["password"] : </p>
-<InputPassword Placeholder=@i18n["password"] @bind-Value="@userInfo.password" DebounceMilliseconds="0" Style="display:inline-block" />
+@* <p Style="display:inline-block">@i18n["password"] : </p>
+<InputPassword Placeholder=@i18n["password"] @bind-Value="@userInfo.password" DebounceMilliseconds="0" Style="display:inline-block" /> *@
+<InputChunk placeHolder="@i18n["password"]" @bind-Value="@userInfo.password" tip="@i18n["password"]" isPassword="true"/>
 <Button Type="@ButtonType.Primary" Style="display: flex;align-items: center;justify-content: center;margin-top: 10px;" @onclick="Save">
     @i18n["confirm"]
 </Button>
@@ -25,7 +27,7 @@
     {
         if (inputType == "register")
         {
-            if (string.IsNullOrWhiteSpace(userInfo.userName) || string.IsNullOrWhiteSpace(userInfo.password))
+            if (string.IsNullOrWhiteSpace(userInfo.userName) || string.IsNullOrWhiteSpace(userInfo.password)||await Shared.Database.AuthUser(userInfo.userName))
             {
                 RenderFragment customIcon = @<Icon Type="close-circle" Theme="outline" Style="color:red"></Icon>;
                 await _notice.Open(new NotificationConfig()

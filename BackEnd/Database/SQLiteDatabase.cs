@@ -123,5 +123,21 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
             if (!reader.Read()) return false;
             return true;
         }
+
+        public async Task AddCluster(string userName, string clusterName, string clusterSecret)
+        {
+            
+        }
+        private async Task<string> QueryUserPasswordMD5(string userName)
+        {
+            string sql = "select * from users where name=@name";
+            SQLiteParameter[] parameters =
+            {
+                new SQLiteParameter("@name",userName)
+            };
+            DbDataReader reader = await ExecuteQuery(sql, parameters);
+            if (!reader.Read()) return null;
+            return reader["password"].ToString();
+        }
     }
 }
