@@ -65,7 +65,7 @@
         var authModule = await JSRunTime.InvokeAsync<IJSObjectReference>("import", "./js/auth.js");
         await authModule.InvokeVoidAsync("SignOut", "/");
     }
-    private async Task SignIn()
+    private void SignIn()
     {
         NavigationManager.NavigateTo("/login", true);
     }

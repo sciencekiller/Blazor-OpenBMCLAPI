@@ -8,7 +8,7 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
 {
     public class SQLiteDatabase:IDatabase
     {
-        private SQLiteConnection connection;
+        private SQLiteConnection? connection;
         public async Task Init()
         {
 

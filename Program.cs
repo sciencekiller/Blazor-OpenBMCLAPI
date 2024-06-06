@@ -80,7 +80,7 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 //<1.3 Add Minimal API>
-app.MapGet("Culture/Set", async (HttpRequest request, [FromQuery] string culture, [FromQuery] string redirectUri) =>
+app.MapGet("Culture/Set",(HttpRequest request, [FromQuery] string culture, [FromQuery] string redirectUri) =>
 {
     if (culture != null)
     {
@@ -99,6 +99,5 @@ app.MapGet("Culture/Set", async (HttpRequest request, [FromQuery] string culture
 });
 app.UseMiddleware<InvalidateSessionMiddleware>();
 //</1.3 Add Minimal API>
-Shared.serviceProvider = builder.Services.BuildServiceProvider();
 await Initialize.Run();
 app.Run();

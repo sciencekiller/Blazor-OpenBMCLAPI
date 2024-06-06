@@ -2,68 +2,83 @@
 
 namespace Blazor_OpenBMCLAPI.BackEnd
 {
-    //By ChatGPT
+    using System;
+    using System.IO;
+    using System.Security.Cryptography;
+    using System.Text;
+
     public class AESCipher
     {
-        private readonly byte[] key;
-        private readonly byte[] iv;
+        private static readonly int SaltSize = 16; // Size in bytes
+        private static readonly int KeySize = 32;  // Size in bytes for AES-256
+        private static readonly int Iterations = 100000; // Recommended iterations
 
-        public AESCipher(string password)
+        // Method to generate a random salt
+        private static byte[] GenerateSalt()
         {
-            //尽管不会有这种情况，但是保险
-            if (string.IsNullOrWhiteSpace(password)) password = "saltwood";
-            using (var deriveBytes = new Rfc2898DeriveBytes(password, 16))
+            var salt = new byte[SaltSize];
+            RandomNumberGenerator.Fill(salt);
+            return salt;
+        }
+
+        // Method to derive a key and IV from a password and salt
+        private static void DeriveKeyAndIV(string password, byte[] salt, out byte[] key, out byte[] iv)
+        {
+            using (var keyGenerator = new Rfc2898DeriveBytes(password, salt, Iterations, HashAlgorithmName.SHA256))
             {
-                key = deriveBytes.GetBytes(16);
-                iv = deriveBytes.GetBytes(16);
+                key = keyGenerator.GetBytes(KeySize);
+                iv = keyGenerator.GetBytes(16); // AES block size is 16 bytes
             }
         }
 
-        public string Encrypt(string plainText)
+        // Method to encrypt a string
+        public static string Encrypt(string plainText, string password)
         {
-            using (var aesAlg = Aes.Create())
-            {
-                aesAlg.Key = key;
-                aesAlg.IV = iv;
+            byte[] salt = GenerateSalt();
+            DeriveKeyAndIV(password, salt, out byte[] key, out byte[] iv);
 
-                using (var encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV))
+            using (var aes = Aes.Create())
+            {
+                aes.Key = key;
+                aes.IV = iv;
+
+                using (var encryptor = aes.CreateEncryptor(aes.Key, aes.IV))
+                using (var ms = new MemoryStream())
                 {
-                    using (var msEncrypt = new MemoryStream())
+                    ms.Write(salt, 0, salt.Length); // Prepend salt to the output
+                    using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+                    using (var sw = new StreamWriter(cs))
                     {
-                        using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-                        {
-                            using (var swEncrypt = new StreamWriter(csEncrypt))
-                            {
-                                swEncrypt.Write(plainText);
-                            }
-                        }
-                        return Convert.ToBase64String(msEncrypt.ToArray());
+                        sw.Write(plainText);
                     }
+                    return Convert.ToBase64String(ms.ToArray());
                 }
             }
         }
 
-        public string Decrypt(string cipherText)
+        // Method to decrypt a string
+        public static string Decrypt(string cipherText, string password)
         {
-            using (var aesAlg = Aes.Create())
-            {
-                aesAlg.Key = key;
-                aesAlg.IV = iv;
+            byte[] cipherBytes = Convert.FromBase64String(cipherText);
+            byte[] salt = new byte[SaltSize];
+            Array.Copy(cipherBytes, 0, salt, 0, salt.Length);
 
-                using (var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV))
+            DeriveKeyAndIV(password, salt, out byte[] key, out byte[] iv);
+
+            using (var aes = Aes.Create())
+            {
+                aes.Key = key;
+                aes.IV = iv;
+
+                using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
+                using (var ms = new MemoryStream(cipherBytes, SaltSize, cipherBytes.Length - SaltSize))
+                using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+                using (var sr = new StreamReader(cs))
                 {
-                    using (var msDecrypt = new MemoryStream(Convert.FromBase64String(cipherText)))
-                    {
-                        using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-                        {
-                            using (var srDecrypt = new StreamReader(csDecrypt))
-                            {
-                                return srDecrypt.ReadToEnd();
-                            }
-                        }
-                    }
+                    return sr.ReadToEnd();
                 }
             }
         }
     }
+
 }
