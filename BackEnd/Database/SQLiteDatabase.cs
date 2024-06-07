@@ -1,6 +1,7 @@
 ﻿using Blazor_OpenBMCLAPI.BackEnd.Cipher;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using System.Data.Common;
+using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.Security.Cryptography;
@@ -60,6 +61,10 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
                 ClusterInfo clusterInfo = new ClusterInfo();
                 clusterInfo.cluster_id = reader["id"].ToString();
                 clusterInfo.cluster_secret = reader["secret"].ToString();
+                //AES解密
+                string userPasswordCipher=await QueryUserPasswordCipher(userName);
+                clusterInfo.cluster_id=AESCipher.Decrypt(clusterInfo.cluster_id,userPasswordCipher);
+                clusterInfo.cluster_secret=AESCipher.Encrypt(clusterInfo.cluster_secret,userPasswordCipher);
                 clusterInfoList.Add(clusterInfo);
             }
             return clusterInfoList;
@@ -119,12 +124,20 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
             if (!reader.Read()) return false;
             return true;
         }
-
         public async Task AddCluster(string userName, string clusterName, string clusterSecret)
         {
-            
+            string userPasswordCipher=await QueryUserPasswordCipher(userName);
+            string clusterSecretHash = AESCipher.Encrypt(clusterSecret, userPasswordCipher);
+            string clusterIDHash = AESCipher.Encrypt(clusterName, userPasswordCipher);
+            string sql = string.Format("insert into {0}_clusters (id, secret) values (@id, @secret)");
+            SQLiteParameter[] parameters =
+            {
+                new SQLiteParameter("@id",clusterIDHash),
+                new SQLiteParameter("@secret",clusterSecretHash)
+            };
+            await ExecuteNonQuery(sql, parameters);
         }
-        private async Task<string> QueryUserPasswordCipher(string userName)
+        public async Task<string> QueryUserPasswordCipher(string userName)
         {
             userName = SHA256Cipher.GetUserNameHash(userName);
             string sql = "select * from users where name=@name";
@@ -135,6 +148,19 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
             DbDataReader reader = await ExecuteQuery(sql, parameters);
             if (!reader.Read()) return null;
             return reader["password"].ToString();
+        }
+
+        public async Task<bool> CheckCluster(string userName,string cluster_id)
+        {
+            cluster_id=AESCipher.Encrypt(cluster_id, await QueryUserPasswordCipher(userName));
+            string sql = string.Format("select * in {0}_clusters where id=@id",userName);
+            SQLiteParameter[] parameters=
+            [
+                new SQLiteParameter("@id",cluster_id)
+            ];
+            DbDataReader reader = await ExecuteQuery(sql, parameters);
+            if(!reader.Read()) return false;
+            return true;
         }
     }
 }

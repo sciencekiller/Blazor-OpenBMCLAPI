@@ -4,5 +4,10 @@
   "save": "Save",
   "saved": "Yep! All the cluster changes has been saved~",
   "saved_intro": "The changes you had already made have been successfully write in the database, you can leave this page without doing anything.",
-  "add": "Add"
+  "add": "Add",
+  "confirm": "OK",
+  "invalid_title": "Cluster id or secret is invalid",
+  "invalid_intro": "The cluster id or secret you entered is invalid, either because you didn't enter it or because the username has already been added.",
+  "add_cluster": "Add a new cluster",
+  "cancel": "Cancel"
 }
