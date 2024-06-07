@@ -1,13 +1,13 @@
 ﻿using System.Security.Cryptography;
 
-namespace Blazor_OpenBMCLAPI.BackEnd
+namespace Blazor_OpenBMCLAPI.BackEnd.Cipher
 {
     using System;
     using System.IO;
     using System.Security.Cryptography;
     using System.Text;
 
-    public class AESCipher
+    public static class AESCipher
     {
         private static readonly int SaltSize = 16; // Size in bytes
         private static readonly int KeySize = 32;  // Size in bytes for AES-256

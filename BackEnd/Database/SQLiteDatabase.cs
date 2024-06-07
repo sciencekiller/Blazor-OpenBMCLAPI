@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+﻿using Blazor_OpenBMCLAPI.BackEnd.Cipher;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using System.Data.Common;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -15,7 +17,7 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
             connection = new SQLiteConnection(string.Format("Data Source={0};Version=3;",Path.Combine(Shared.rootDirectory,"statistics.db")));
             await connection.OpenAsync();
             //创建表
-            await ExecuteNonQuery("create table if not exists users(name text not null, password text not null)");
+            await ExecuteNonQuery("create table if not exists users(name text not null, password text not null, salt text not null)");
         }
         #region Execute commands
         private async Task ExecuteNonQuery(string sql)
@@ -71,18 +73,14 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
         public async Task CreateUser(string userName,string password)
         {
             await ExecuteNonQuery(string.Format("create table if not exists {0}_clusters(id text not null, secret text not null)", userName));
-            MD5 md5 = MD5.Create();
-            byte[] passwordbyte=Encoding.UTF8.GetBytes(password);
-            byte[] result= md5.ComputeHash(passwordbyte);
-            password = BitConverter.ToString(result).Replace("-", "");
-            byte[] namebyte=Encoding.UTF8.GetBytes(userName);
-            result=md5.ComputeHash(namebyte);
-            userName = BitConverter.ToString(result).Replace("-", "");
-            string sql = "insert into users (name, password) values (@name, @password)";
+            var (hashUserName, hashPassword, salt)=SHA256Cipher.CreatePasswordHash(userName,password);
+
+            string sql = "insert into users (name, password, salt) values (@name, @password, @salt)";
             SQLiteParameter[] parameters =
             {
-                new SQLiteParameter("@name",userName),
-                new SQLiteParameter("@password",password)
+                new SQLiteParameter("@name",hashUserName),
+                new SQLiteParameter("@password",hashPassword),
+                new SQLiteParameter("@salt",salt)
             };
             await ExecuteNonQuery(sql, parameters);
             //创建该用户的表
@@ -90,30 +88,28 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
         }
         public async Task<bool> AuthUser(string userName,string password)
         {
-            MD5 md5 = MD5.Create();
-            byte[] passwordbyte = Encoding.UTF8.GetBytes(password);
-            byte[] result = md5.ComputeHash(passwordbyte);
-            password = BitConverter.ToString(result).Replace("-", "");
-            byte[] namebyte = Encoding.UTF8.GetBytes(userName);
-            result = md5.ComputeHash(namebyte);
-            userName = BitConverter.ToString(result).Replace("-", "");
-            string sql = "select * from users where name=@name and password=@password";
+            //获取盐和密钥
+            string userNameHash=SHA256Cipher.GetUserNameHash(userName);
+            Trace.WriteLine(userNameHash);
+            string sql = "select * from users where name=@name";
             SQLiteParameter[] parameters =
             {
-                new SQLiteParameter("@name",userName),
-                new SQLiteParameter("@password",password)
+                new SQLiteParameter("@name",userNameHash)
             };
             DbDataReader reader=await ExecuteQuery(sql, parameters);
-            if(!reader.Read()) return false;
-            return true;
+            if(!reader.Read())
+            {
+                Trace.WriteLine("User not found");
+                return false;
+            }
+            string passwordHash = reader["password"].ToString();
+            string salt = reader["salt"].ToString();
+            Trace.WriteLine(userNameHash + "\t" + passwordHash + "\t" + salt);
+            return SHA256Cipher.VerifyPassword(userName,password,userNameHash,passwordHash,salt);
         }
         public async Task<bool> AuthUser(string userName)
         {
-
-            MD5 md5 = MD5.Create();
-            byte[] namebyte = Encoding.UTF8.GetBytes(userName);
-            byte[] result = md5.ComputeHash(namebyte);
-            userName = BitConverter.ToString(result).Replace("-", "");
+            userName = SHA256Cipher.GetUserNameHash(userName);
             string sql = "select * from users where name=@name";
             SQLiteParameter[] parameters =
             {
@@ -128,8 +124,9 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
         {
             
         }
-        private async Task<string> QueryUserPasswordMD5(string userName)
+        private async Task<string> QueryUserPasswordCipher(string userName)
         {
+            userName = SHA256Cipher.GetUserNameHash(userName);
             string sql = "select * from users where name=@name";
             SQLiteParameter[] parameters =
             {
