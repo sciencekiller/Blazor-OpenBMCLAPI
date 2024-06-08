@@ -3,11 +3,14 @@
   "cluster_intro": "你需要配置用户id和secret以上线你的节点。",
   "save": "保存",
   "saved": "太好了！所有cluster更改都已保存~",
-  "saved_intro": "您已经所做的更改已成功写入数据库，您不执行任何操作即可离开此页面。",
   "add": "添加",
   "confirm": "确认",
-  "invalid_title": "Cluster id或secret无效",
-  "invalid_intro": "您输入的Cluster id或secret无效，这有可能是因为您没有输入，也可能是因为这个用户名已经被使用过。",
+  "invalid": "Cluster id或secret无效",
   "add_cluster": "添加新的Cluster",
-  "cancel": "取消"
+  "cancel": "取消",
+  "delete": "删除",
+  "delete_confirm": "你确定删除Cluster吗？",
+  "delete_failed": "删除cluster失败！",
+  "delete_success": "任务成功完成",
+  "action": "操作"
 }

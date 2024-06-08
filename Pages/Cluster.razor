@@ -1,37 +1,35 @@
 ﻿@page "/cluster"
 @attribute [Authorize]
 @inject Toolbelt.Blazor.I18nText.I18nText I18nText
-@inject INotificationService _notice
+@inject IMessageService _message
 @inject UserService _userService
 @using Blazor_OpenBMCLAPI.BackEnd;
 <h1 style="font-size:32px">@i18n["title"]</h1>
 <p></p>
 <p style="font-size:14px">@i18n["cluster_intro"]</p>
 <Button type="@ButtonType.Primary" Style="margin-left:auto" @onclick="AddCluster">@i18n["add"]</Button>
-@{
-    RenderFragment footer = @<Template>
-        <Button OnClick="@HandleCancel" @key="@( "back" )">@i18n["cancel"]</Button>
-    </Template>;
-}
 <Modal Title="@i18n["add_cluster"]"
-       Footer="@footer"
        Visible="@_visible"
-       OnCancel="@HandleCancel">
-    <Blazor_OpenBMCLAPI.Components.ClusterInfoInput/>
+       OnCancel="@HandleCancel"
+       OnOk="@HandleOk">
+    <Blazor_OpenBMCLAPI.Components.ClusterInfoInput @bind-Value="@addInfo"/>
 </Modal>
 <Table TItem="ICluster" DataSource="@clusterinfo">
     <PropertyColumn Property="c=>c.cluster_id" Title="Cluster ID"></PropertyColumn>
     <PropertyColumn Property="c=>c.cluster_secret" Title="Cluster Secret"></PropertyColumn>
-    <ActionColumn Title="Action">
+    <ActionColumn Title="@i18n["action"]">
         <Space Size=@("middle")>
             <SpaceItem>
-                <a>Delete</a>
+                <Popconfirm Title="@i18n["delete_confirm"]" OkText="@i18n["confirm"]" CancelText="@i18n["cancel"]" OnConfirm="()=>Delete(context.cluster_id)">
+                    <a>@i18n["delete"]</a>
+                </Popconfirm>
             </SpaceItem>
         </Space>
     </ActionColumn>
 </Table>
 @code {
     public List<ClusterInfo> clusterinfo = new();
+    public ClusterInfo addInfo = new();
     I18nText.cluster i18n = new I18nText.cluster();
     protected override async Task OnInitializedAsync()
     {
@@ -39,24 +37,45 @@
         clusterinfo = await Shared.Database.GetClusters(_userService.GetCurrentUsername());
     }
     bool _visible = false;
-    
+
 
     private void HandleCancel(MouseEventArgs e)
     {
         _visible = false;
     }
+    private async Task HandleOk()
+    {
+        if (await Shared.Database.CheckCluster(_userService.GetCurrentUsername(), addInfo.cluster_id) || string.IsNullOrWhiteSpace(addInfo.cluster_id) || string.IsNullOrWhiteSpace(addInfo.cluster_secret))
+        {
+            RenderFragment customIcon = @<Icon Type="close-circle" Theme="outline" Style="color:red"></Icon>;
+            await _message.Error(i18n["invalid"]);
+            return;
+        }
+        await Shared.Database.AddCluster(_userService.GetCurrentUsername(), addInfo.cluster_id, addInfo.cluster_secret);
+        _visible = false;
+        clusterinfo = await Shared.Database.GetClusters(_userService.GetCurrentUsername());
+    }
     internal async Task Save()
     {
         RenderFragment customIcon = @<Icon Type="check-circle" Theme="outline" Style="color:limegreen"></Icon>;
-        await _notice.Open(new NotificationConfig()
-            {
-                Message = i18n["saved"],
-                Description = i18n["saved_intro"],
-                Icon = customIcon
-            });
+        await _message.Success(i18n["saved"]);
     }
     public void AddCluster()
     {
         _visible = true;
+    }
+    private async Task Delete(string id)
+    {
+        Trace.WriteLine(_userService.GetCurrentUsername() + "\t" + id);
+        if(!await Shared.Database.DeleteCluster(_userService.GetCurrentUsername(), id))
+        {
+            clusterinfo = await Shared.Database.GetClusters(_userService.GetCurrentUsername());
+            await _message.Error(i18n["delete_failed"]);
+        }
+        else
+        {
+            clusterinfo = await Shared.Database.GetClusters(_userService.GetCurrentUsername());
+            await _message.Success(i18n["delete_success"]);
+        }
     }
 }

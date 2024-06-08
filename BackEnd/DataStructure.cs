@@ -14,6 +14,7 @@ namespace Blazor_OpenBMCLAPI.BackEnd
         public string cluster_id { get; set; }
         [DisplayName("Cluster Secret")]
         public string cluster_secret { get; set; }
+        public string cluster_id_hash { get; set; }
         //[DisplayName("Is Full")]
         //public bool is_full { get; set;}
     }

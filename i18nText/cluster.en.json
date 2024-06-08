@@ -3,11 +3,14 @@
   "cluster_intro": "You need to configure the user ID and secret to bring your node online.",
   "save": "Save",
   "saved": "Yep! All the cluster changes has been saved~",
-  "saved_intro": "The changes you had already made have been successfully write in the database, you can leave this page without doing anything.",
   "add": "Add",
   "confirm": "OK",
-  "invalid_title": "Cluster id or secret is invalid",
-  "invalid_intro": "The cluster id or secret you entered is invalid, either because you didn't enter it or because the username has already been added.",
+  "invalid": "Cluster id or secret is invalid",
   "add_cluster": "Add a new cluster",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "delete_comfirm": "Are you sure to delete this cluster?",
+  "delete_failed": "Failed to delete the cluster!",
+  "delete_success": "All work has done!",
+  "action": "Action"
 }

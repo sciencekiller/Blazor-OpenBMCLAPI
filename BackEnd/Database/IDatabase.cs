@@ -11,5 +11,6 @@
         public Task AddCluster(string userName,string clusterName,string clusterSecret);
         public Task<string> QueryUserPasswordCipher(string userName);
         public Task<bool> CheckCluster(string userName,string cluster_id);
+        public Task<bool> DeleteCluster(string userName,string cluster_id);
     }
 }
