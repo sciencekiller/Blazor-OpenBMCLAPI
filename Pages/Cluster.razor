@@ -9,10 +9,10 @@
 <p style="font-size:14px">@i18n["cluster_intro"]</p>
 <Button type="@ButtonType.Primary" Style="margin-left:auto" @onclick="AddCluster">@i18n["add"]</Button>
 <Modal Title="@i18n["add_cluster"]"
-       Visible="@_visible"
+       Visible="@_modal_visible"
        OnCancel="@HandleCancel"
        OnOk="@HandleOk">
-    <Blazor_OpenBMCLAPI.Components.ClusterInfoInput @bind-Value="@addInfo"/>
+    <Blazor_OpenBMCLAPI.Components.ClusterInfoInput @bind-Value="@addInfo" />
 </Modal>
 <Table TItem="ICluster" DataSource="@clusterinfo">
     <PropertyColumn Property="c=>c.cluster_id" Title="Cluster ID"></PropertyColumn>
@@ -21,13 +21,23 @@
         <Space Size=@("middle")>
             <SpaceItem>
                 <Popconfirm Title="@i18n["delete_confirm"]" OkText="@i18n["confirm"]" CancelText="@i18n["cancel"]" OnConfirm="()=>Delete(context.cluster_id)">
-                    <a>@i18n["delete"]</a>
+                    <Button Type="@ButtonType.Link" Danger>@i18n["delete"]</Button>
                 </Popconfirm>
+                <Popover Title="@i18n["edit_cluster"]" Trigger="@(new AntDesign.Trigger[] { AntDesign.Trigger.Click})" Visible=@_popover_visible OnVisibleChange="VisibleChanged">
+                    <ChildContent>
+                        <Button Type="@ButtonType.Link">@i18n["edit"]</Button>
+                    </ChildContent>
+                    <ContentTemplate>
+                        <Blazor_OpenBMCLAPI.Components.ClusterInfoInput @bind-Value="@editInfo" />
+                        <Button Type="@ButtonType.Primary" @onclick="()=>Edit(context.cluster_id,editInfo.cluster_id,editInfo.cluster_secret)" Loading="@popoverButtonLoading">@i18n["confirm"]</Button>
+                    </ContentTemplate>
+                </Popover>
             </SpaceItem>
         </Space>
     </ActionColumn>
 </Table>
 @code {
+    public static ClusterInfo editInfo = new ClusterInfo();
     public List<ClusterInfo> clusterinfo = new();
     public ClusterInfo addInfo = new();
     I18nText.cluster i18n = new I18nText.cluster();
@@ -36,12 +46,13 @@
         i18n = await I18nText.GetTextTableAsync<I18nText.cluster>(this);
         clusterinfo = await Shared.Database.GetClusters(_userService.GetCurrentUsername());
     }
-    bool _visible = false;
-
+    private bool _modal_visible = false;
+    private bool _popover_visible = false;
+    private bool popoverButtonLoading = false;
 
     private void HandleCancel(MouseEventArgs e)
     {
-        _visible = false;
+        _modal_visible = false;
     }
     private async Task HandleOk()
     {
@@ -52,7 +63,7 @@
             return;
         }
         await Shared.Database.AddCluster(_userService.GetCurrentUsername(), addInfo.cluster_id, addInfo.cluster_secret);
-        _visible = false;
+        _modal_visible = false;
         clusterinfo = await Shared.Database.GetClusters(_userService.GetCurrentUsername());
     }
     internal async Task Save()
@@ -62,12 +73,12 @@
     }
     public void AddCluster()
     {
-        _visible = true;
+        _modal_visible = true;
     }
     private async Task Delete(string id)
     {
         Trace.WriteLine(_userService.GetCurrentUsername() + "\t" + id);
-        if(!await Shared.Database.DeleteCluster(_userService.GetCurrentUsername(), id))
+        if (!await Shared.Database.DeleteCluster(_userService.GetCurrentUsername(), id))
         {
             clusterinfo = await Shared.Database.GetClusters(_userService.GetCurrentUsername());
             await _message.Error(i18n["delete_failed"]);
@@ -77,5 +88,18 @@
             clusterinfo = await Shared.Database.GetClusters(_userService.GetCurrentUsername());
             await _message.Success(i18n["delete_success"]);
         }
+    }
+    private async Task Edit(string origin_id, string target_id, string target_secret)
+    {
+        popoverButtonLoading = true;
+        await Shared.Database.DeleteCluster(_userService.GetCurrentUsername(), origin_id);
+        await Shared.Database.AddCluster(_userService.GetCurrentUsername(), target_id, target_secret);
+        clusterinfo = await Shared.Database.GetClusters(_userService.GetCurrentUsername());
+        _popover_visible = false;
+        popoverButtonLoading = false;
+    }
+    private async Task VisibleChanged(bool visible)
+    {
+        _popover_visible = visible;
     }
 }

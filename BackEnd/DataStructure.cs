@@ -24,4 +24,11 @@ namespace Blazor_OpenBMCLAPI.BackEnd
         public string password { get; set; }
         //public bool is_full { get; set;}
     }
+    public class StorageInfo
+    {
+        public string type { get; set; }
+        public string endpoint { get; set; }
+        public string path { get; set; }
+        public string userName {  set; get; }
+        public string password { set; get; }
 }

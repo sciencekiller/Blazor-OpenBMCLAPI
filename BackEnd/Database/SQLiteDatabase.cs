@@ -79,6 +79,7 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
         public async Task CreateUser(string userName, string password)
         {
             await ExecuteNonQuery(string.Format("create table if not exists {0}_clusters(id text not null, secret text not null)", userName));
+            await ExecuteNonQuery(string.Format("create table if not exists {0}_storages(name text not null, type text not null, endpoint text, path text not null, username text, password not null)", userName));
             var (hashUserName, hashPassword, salt) = SHA256Cipher.CreatePasswordHash(userName, password);
 
             string sql = "insert into users (name, password, salt) values (@name, @password, @salt)";

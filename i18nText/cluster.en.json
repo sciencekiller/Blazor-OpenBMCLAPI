@@ -12,5 +12,7 @@
   "delete_comfirm": "Are you sure to delete this cluster?",
   "delete_failed": "Failed to delete the cluster!",
   "delete_success": "All work has done!",
-  "action": "Action"
+  "action": "Action",
+  "edit": "Edit",
+  "edit_cluster": "Edit the cluster"
 }
