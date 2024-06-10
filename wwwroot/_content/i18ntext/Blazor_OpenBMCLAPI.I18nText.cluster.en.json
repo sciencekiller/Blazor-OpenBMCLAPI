@@ -1,0 +1,19 @@
+{
+  "action": "Action",
+  "add": "Add",
+  "add_cluster": "Add a new cluster",
+  "cancel": "Cancel",
+  "cluster_intro": "You need to configure the user ID and secret to bring your node online.",
+  "confirm": "OK",
+  "delete": "Delete",
+  "delete_comfirm": "Are you sure to delete this cluster?",
+  "delete_confirm": "你确定删除Cluster吗？",
+  "delete_failed": "Failed to delete the cluster!",
+  "delete_success": "All work has done!",
+  "edit": "Edit",
+  "edit_cluster": "Edit the cluster",
+  "invalid": "Cluster id or secret is invalid",
+  "save": "Save",
+  "saved": "Yep! All the cluster changes has been saved~",
+  "title": "User information"
+}

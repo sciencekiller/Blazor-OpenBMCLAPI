@@ -1,0 +1,6 @@
+{
+  "language_header": "语言",
+  "language_intro": "你可以在下面的（也许是后面的？）选择框中选择你的语言",
+  "language_invite": "Sciencekill不是一个天才，所以他不能像一些大公司那样把Blazor-OpenBMCLAPI翻译成各种语言。但他非常希望有人可以翻译应用程序并将翻译文件发送给他。只需在 GitHub 存储库中下载翻译文件 （/i18nText），然后复制您理解的翻译文件之一。更改文件名中的语言代码。不要更改键，只需替换值！",
+  "title": "设置"
+}

@@ -1,0 +1,12 @@
+{
+  "cluster": "User information",
+  "dashboard": "Dashboard",
+  "hello": "Hello, ",
+  "login_intro": "You are not currently logged in. You can press the link below to log in, or you will not able to visit some pages.",
+  "login_title": "Log in",
+  "logout_intro": "You are currently logged in. If you want to log out and clean the cookie, please click the link below.",
+  "logout_title": "Log out",
+  "profile": "Profile",
+  "settings": "Settings",
+  "unauth": "Not logged in"
+}

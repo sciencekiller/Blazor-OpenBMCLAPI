@@ -1,0 +1,15 @@
+{
+  "back_home": "Back home",
+  "confirm": "OK",
+  "invalid": "User name or password is invalid",
+  "login_failed": "Unable to login, Please check your user name and password.",
+  "login_title": "Login",
+  "notfound_intro": "We're sorry, but we can't find the page you're visiting, please wait a moment, or contact the admin.",
+  "notfound_title": "Oops! The page you are visiting is not exists",
+  "password": "Password",
+  "register_intro": "You are creating a user. Once created, this user will have full authority to operate the node, including access to and store sensitive information, so please be cautious.",
+  "register_title": "Register",
+  "unauth_intro": "You are not currently logged in, but the page you are visiting requires administrator privileges, so please log in first.",
+  "unauth_title": "Oops! You are not logged in",
+  "username": "User name:"
+}

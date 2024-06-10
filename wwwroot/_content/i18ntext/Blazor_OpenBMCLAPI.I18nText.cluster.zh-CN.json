@@ -1,0 +1,19 @@
+{
+  "action": "操作",
+  "add": "添加",
+  "add_cluster": "添加新的Cluster",
+  "cancel": "取消",
+  "cluster_intro": "你需要配置用户id和secret以上线你的节点。",
+  "confirm": "确认",
+  "delete": "删除",
+  "delete_comfirm": "Are you sure to delete this cluster?",
+  "delete_confirm": "你确定删除Cluster吗？",
+  "delete_failed": "删除cluster失败！",
+  "delete_success": "任务成功完成",
+  "edit": "编辑",
+  "edit_cluster": "编辑cluster",
+  "invalid": "Cluster id或secret无效",
+  "save": "保存",
+  "saved": "太好了！所有cluster更改都已保存~",
+  "title": "用户配置"
+}
