@@ -1,12 +1,12 @@
 {
   "runtimeTarget": {
-    "name": ".NETCoreApp,Version=v8.0/linux-arm",
+    "name": ".NETCoreApp,Version=v8.0/linux-arm64",
     "signature": ""
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v8.0": {},
-    ".NETCoreApp,Version=v8.0/linux-arm": {
+    ".NETCoreApp,Version=v8.0/linux-arm64": {
       "Blazor_OpenBMCLAPI/1.0.0": {
         "dependencies": {
           "AntDesign.Charts": "0.5.1",
@@ -15,14 +15,14 @@
           "SQLite": "3.13.0",
           "System.Net.Http.Json": "9.0.0-preview.3.24172.9",
           "Toolbelt.Blazor.I18nText": "12.0.2",
-          "runtimepack.Microsoft.NETCore.App.Runtime.linux-arm": "8.0.4",
-          "runtimepack.Microsoft.AspNetCore.App.Runtime.linux-arm": "8.0.4"
+          "runtimepack.Microsoft.NETCore.App.Runtime.linux-arm64": "8.0.4",
+          "runtimepack.Microsoft.AspNetCore.App.Runtime.linux-arm64": "8.0.4"
         },
         "runtime": {
           "Blazor_OpenBMCLAPI.dll": {}
         }
       },
-      "runtimepack.Microsoft.NETCore.App.Runtime.linux-arm/8.0.4": {
+      "runtimepack.Microsoft.NETCore.App.Runtime.linux-arm64/8.0.4": {
         "runtime": {
           "Microsoft.CSharp.dll": {
             "assemblyVersion": "8.0.0.0",
@@ -730,7 +730,7 @@
           }
         }
       },
-      "runtimepack.Microsoft.AspNetCore.App.Runtime.linux-arm/8.0.4": {
+      "runtimepack.Microsoft.AspNetCore.App.Runtime.linux-arm64/8.0.4": {
         "runtime": {
           "Microsoft.AspNetCore.Antiforgery.dll": {
             "assemblyVersion": "8.0.0.0",
@@ -1697,7 +1697,7 @@
       },
       "SQLitePCLRaw.lib.e_sqlite3/2.1.6": {
         "native": {
-          "runtimes/linux-arm/native/libe_sqlite3.so": {
+          "runtimes/linux-arm64/native/libe_sqlite3.so": {
             "fileVersion": "0.0.0.0"
           }
         }
@@ -2412,12 +2412,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "runtimepack.Microsoft.NETCore.App.Runtime.linux-arm/8.0.4": {
+    "runtimepack.Microsoft.NETCore.App.Runtime.linux-arm64/8.0.4": {
       "type": "runtimepack",
       "serviceable": false,
       "sha512": ""
     },
-    "runtimepack.Microsoft.AspNetCore.App.Runtime.linux-arm/8.0.4": {
+    "runtimepack.Microsoft.AspNetCore.App.Runtime.linux-arm64/8.0.4": {
       "type": "runtimepack",
       "serviceable": false,
       "sha512": ""
@@ -3390,38 +3390,38 @@
     }
   },
   "runtimes": {
-    "android-arm": [
+    "android-arm64": [
       "android",
-      "linux-bionic-arm",
+      "linux-bionic-arm64",
       "linux-bionic",
-      "linux-arm",
+      "linux-arm64",
       "linux",
-      "unix-arm",
+      "unix-arm64",
       "unix",
       "any",
       "base"
     ],
-    "linux-arm": [
+    "linux-arm64": [
       "linux",
-      "unix-arm",
+      "unix-arm64",
       "unix",
       "any",
       "base"
     ],
-    "linux-bionic-arm": [
+    "linux-bionic-arm64": [
       "linux-bionic",
-      "linux-arm",
+      "linux-arm64",
       "linux",
-      "unix-arm",
+      "unix-arm64",
       "unix",
       "any",
       "base"
     ],
-    "linux-musl-arm": [
+    "linux-musl-arm64": [
       "linux-musl",
-      "linux-arm",
+      "linux-arm64",
       "linux",
-      "unix-arm",
+      "unix-arm64",
       "unix",
       "any",
       "base"
