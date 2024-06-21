@@ -1,17 +1,21 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using Blazor_OpenBMCLAPI.BackEnd;
+using Blazor_OpenBMCLAPI.BackEnd.Database;
 
-namespace Blazor_OpenBMCLAPI.BackEnd
+namespace Blazor_OpenBMCLAPI.Middleware
 {
     //By ChatGPT
     public class InvalidateSessionMiddleware
     {
         private readonly RequestDelegate _next;
+        private IDatabase db;
 
-        public InvalidateSessionMiddleware(RequestDelegate next)
+        public InvalidateSessionMiddleware(RequestDelegate next,IDatabase db)
         {
             _next = next;
+            this.db = db;
         }
 
         public async Task Invoke(HttpContext context)
@@ -23,7 +27,7 @@ namespace Blazor_OpenBMCLAPI.BackEnd
                 var userEmail = context.User.FindFirst(ClaimTypes.Email)?.Value;
 
                 // 检查用户是否仍然存在于数据库中
-                if (!string.IsNullOrEmpty(userEmail) && !await Shared.Database.AuthUser(userEmail))
+                if (!string.IsNullOrEmpty(userEmail) && !await db.AuthUser(userEmail))
                 {
                     // 用户不存在，使会话失效
                     await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

@@ -3,6 +3,7 @@
   "settings": "设置",
   "profile": "配置",
   "cluster": "用户配置",
+  "node_profile": "节点配置文件",
   "hello": "你好, ",
   "unauth": "未登录",
   "login_title": "登录",

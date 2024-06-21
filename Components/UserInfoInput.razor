@@ -27,7 +27,7 @@
     {
         if (inputType == "register")
         {
-            if (string.IsNullOrWhiteSpace(userInfo.userName) || string.IsNullOrWhiteSpace(userInfo.password)||await Shared.Database.AuthUser(userInfo.userName))
+            if (string.IsNullOrWhiteSpace(userInfo.userName) || string.IsNullOrWhiteSpace(userInfo.password)||await db.AuthUser(userInfo.userName))
             {
                 RenderFragment customIcon = @<Icon Type="close-circle" Theme="outline" Style="color:red"></Icon>;
                 await _message.Error(i18n["invalid"]);
@@ -35,7 +35,7 @@
             else
             {
                 //本来应该是加盐，但是加个盐木也是一样的对吧:)
-                await Shared.Database.CreateUser(userInfo.userName, userInfo.password+"saltwood");
+                await db.CreateUser(userInfo.userName, userInfo.password+"saltwood");
                 var authModule = await JSRunTime.InvokeAsync<IJSObjectReference>("import", "./js/auth.js");
                 await authModule.InvokeVoidAsync("SignIn", userInfo.userName, userInfo.password, "/");
 
@@ -43,7 +43,7 @@
         }
         else
         {
-            if (await Shared.Database.AuthUser(userInfo.userName, userInfo.password+"saltwood"))
+            if (await db.AuthUser(userInfo.userName, userInfo.password+"saltwood"))
             {
                 var authModule = await JSRunTime.InvokeAsync<IJSObjectReference>("import", "./js/auth.js");
                 await authModule.InvokeVoidAsync("SignIn", userInfo.userName, userInfo.password, "/");

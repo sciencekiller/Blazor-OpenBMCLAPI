@@ -3,6 +3,7 @@
   "settings": "Settings",
   "profile": "Profile",
   "cluster": "User information",
+  "node_profile": "Node profiles",
   "hello": "Hello, ",
   "unauth": "Not logged in",
   "login_title": "Log in",

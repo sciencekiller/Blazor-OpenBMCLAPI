@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Blazor_OpenBMCLAPI.BackEnd.Database;
 
 namespace Blazor_OpenBMCLAPI.BackEnd
 {
@@ -11,6 +12,12 @@ namespace Blazor_OpenBMCLAPI.BackEnd
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private IDatabase db;
+        public AuthController(IDatabase database)
+        {
+            this.db = database;
+        }
+
         private static readonly AuthenticationProperties COOKIE_EXPIRES = new AuthenticationProperties()
         {
             ExpiresUtc = DateTimeOffset.UtcNow.AddHours(24),
@@ -22,7 +29,7 @@ namespace Blazor_OpenBMCLAPI.BackEnd
         [Route("api/auth/signin")]
         public async Task<ActionResult> SignInPost(SigninData value)
         {
-            if(!await Shared.Database.AuthUser(value.Email, value.Password+"saltwood")) {
+            if(!await db.AuthUser(value.Email, value.Password+"saltwood")) {
                 return Forbid();
             }
             var claims = new List<Claim>

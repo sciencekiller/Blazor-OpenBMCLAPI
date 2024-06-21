@@ -7,7 +7,7 @@
     I18nText.auth i18n = new I18nText.auth();
     protected override async Task OnInitializedAsync()
     {
-        if (!await Shared.Database.IsUserExist()) NavigationManager.NavigateTo("/register", true);
+        if (!await db.IsUserExist()) NavigationManager.NavigateTo("/register", true);
         i18n = await I18nText.GetTextTableAsync<I18nText.auth>(this);
     }
 }

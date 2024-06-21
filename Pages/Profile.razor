@@ -1,0 +1,93 @@
+﻿@page "/profile"
+@attribute [Authorize]
+@inject Toolbelt.Blazor.I18nText.I18nText I18nText
+@inject IMessageService _message
+@inject UserService _userService
+
+<h1 style="font-size:32px">@i18n["title"]</h1>
+<Modal Title="@i18n["add_profile"]"
+       Visible="@_modal_visible"
+       OnCancel="@HandleCancel"
+       OnOk="@HandleOk">
+    <Blazor_OpenBMCLAPI.Components.ProfileInfoInput @bind=@addInfo />
+</Modal>
+<Table TItem="IProfile" DataSource="@profileInfo">
+    <PropertyColumn Property="c=>c.name" Title="@i18n["name"]"></PropertyColumn>
+    <PropertyColumn Property="c=>c.type" Title="@i18n["type"]"></PropertyColumn>
+    <PropertyColumn Property="c=>c.endpoint" Title="@i18n["endpoint"]"></PropertyColumn>
+    <ActionColumn Title="@i18n["action"]">
+        <Space Size=@("middle")>
+            <SpaceItem>
+                <Popconfirm Title="@i18n["delete_confirm"]" OkText="@i18n["confirm"]" CancelText="@i18n["cancel"]" OnConfirm="()=>Delete(context.name)">
+                    <Button Type="@ButtonType.Link" Danger>@i18n["delete"]</Button>
+                </Popconfirm>
+                <Popover Title="@i18n["edit_profile"]" Trigger="@(new AntDesign.Trigger[] { AntDesign.Trigger.Click})" Visible=@_popover_visible OnVisibleChange="VisibleChanged">
+                    <ChildContent>
+                        <Button Type="@ButtonType.Link">@i18n["edit"]</Button>
+                    </ChildContent>
+                    <ContentTemplate>
+                        <Blazor_OpenBMCLAPI.Components.ProfileInfoInput @bind="@editInfo" />
+                        <Button Type="@ButtonType.Primary" @onclick="()=>Edit(context.name,editInfo.name,editInfo.type,editInfo.endpoint)" Loading="@popoverButtonLoading">@i18n["confirm"]</Button>
+                    </ContentTemplate>
+                </Popover>
+            </SpaceItem>
+        </Space>
+    </ActionColumn>
+</Table>
+@code {
+    public List<ProfileInfo> profileInfo = new();
+    public ProfileInfo editInfo;
+    public ProfileInfo addInfo;
+    I18nText.profile i18n = new I18nText.profile();
+    private bool _popover_visible = false;
+    private bool popoverButtonLoading = false;
+    private bool _modal_visible = false;
+
+    private void HandleCancel(MouseEventArgs e)
+    {
+        _modal_visible = false;
+    }
+    private async Task HandleOk()
+    {
+        if (await db.CheckProfile(_userService.GetCurrentUsername(), addInfo.name) || string.IsNullOrWhiteSpace(addInfo.name) || string.IsNullOrWhiteSpace(addInfo.type) || string.IsNullOrWhiteSpace(addInfo.endpoint))
+        {
+            RenderFragment customIcon = @<Icon Type="close-circle" Theme="outline" Style="color:red"></Icon>;
+            await _message.Error(i18n["invalid"]);
+            return;
+        }
+        await db.AddProfile(_userService.GetCurrentUsername(), addInfo.name, addInfo.type,addInfo.endpoint);
+        _modal_visible = false;
+        profileInfo = await db.GetProfiles(_userService.GetCurrentUsername());
+    }
+    internal async Task Save()
+    {
+        RenderFragment customIcon = @<Icon Type="check-circle" Theme="outline" Style="color:limegreen"></Icon>;
+        await _message.Success(i18n["saved"]);
+    }
+    public void AddCluster()
+    {
+        _modal_visible = true;
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        i18n = await I18nText.GetTextTableAsync<I18nText.profile>(this);
+        profileInfo = await db.GetProfiles(_userService.GetCurrentUsername());
+    }
+    private async Task Delete(string profileName)
+    {
+        await db.DeleteProfile(_userService.GetCurrentUsername(),profileName);
+    }
+    private async Task Edit(string origin_name,string target_name,string target_type,string target_endpoint)
+    {
+        popoverButtonLoading = true;
+        await db.DeleteProfile(_userService.GetCurrentUsername(), origin_name);
+        await db.AddProfile(_userService.GetCurrentUsername(), target_name, target_type,target_endpoint);
+        profileInfo = await db.GetProfiles(_userService.GetCurrentUsername());
+        _popover_visible = false;
+        popoverButtonLoading = false;
+    }
+    private async Task VisibleChanged(bool visible)
+    {
+        _popover_visible = visible;
+    }
+}

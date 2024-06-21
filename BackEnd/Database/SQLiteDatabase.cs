@@ -1,4 +1,5 @@
-﻿//using Blazor_OpenBMCLAPI.BackEnd.Cipher;
+﻿#region unuse
+//using Blazor_OpenBMCLAPI.BackEnd.Cipher;
 //using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 //using System.Data.Common;
 //using System.Data.SqlClient;
@@ -188,6 +189,7 @@
 //        }
 //    }
 //}
+#endregion
 using Blazor_OpenBMCLAPI.BackEnd.Cipher;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using System.Data.Common;
@@ -201,13 +203,14 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
     public class SQLiteDatabase : IDatabase
     {
         private SqliteConnection? connection;
-        public async Task Init()
+        public SQLiteDatabase()
         {
-            connection = new SqliteConnection($"Data Source={Path.Combine(Shared.rootDirectory, "statistics.db")}");
-            await connection.OpenAsync();
+            connection = new SqliteConnection($"Data Source={Path.Combine(Directory.GetCurrentDirectory(), "statistics.db")}");
+            connection.Open();
             // 创建表
-            await ExecuteNonQuery("create table if not exists users(name text not null, password text not null, salt text not null)");
+            ExecuteNonQuery("create table if not exists users(name text not null, password text not null, salt text not null)").GetAwaiter();
         }
+
 
         #region Execute commands
         private async Task ExecuteNonQuery(string sql)
@@ -253,28 +256,7 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
         }
         #endregion
 
-        public async Task<List<ClusterInfo>> GetClusters(string userName)
-        {
-            List<ClusterInfo> clusterInfoList = new();
-            using (DbDataReader reader = await ExecuteQuery($"select * from {userName}_clusters"))
-            {
-                while (await reader.ReadAsync())
-                {
-                    ClusterInfo clusterInfo = new ClusterInfo
-                    {
-                        cluster_id = reader["id"].ToString(),
-                        cluster_secret = reader["secret"].ToString(),
-                        cluster_id_hash = reader["id"].ToString()
-                    };
-                    // AES解密
-                    string userPasswordCipher = await QueryUserPasswordCipher(userName);
-                    clusterInfo.cluster_id = AESCipher.Decrypt(clusterInfo.cluster_id, userPasswordCipher);
-                    clusterInfo.cluster_secret = AESCipher.Decrypt(clusterInfo.cluster_secret, userPasswordCipher);
-                    clusterInfoList.Add(clusterInfo);
-                }
-            }
-            return clusterInfoList;
-        }
+        
 
         public async Task<bool> IsUserExist()
         {
@@ -287,7 +269,7 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
         public async Task CreateUser(string userName, string password)
         {
             await ExecuteNonQuery($"create table if not exists {userName}_clusters(id text not null, secret text not null)");
-            await ExecuteNonQuery($"create table if not exists {userName}_storages(name text not null, type text not null, endpoint text, path text not null, username text, password not null)");
+            await ExecuteNonQuery($"create table if not exists {userName}_profiles(name text not null, type text not null, endpoint text not null)");
 
             var (hashUserName, hashPassword, salt) = SHA256Cipher.CreatePasswordHash(userName, password);
             string sql = "insert into users (name, password, salt) values (@name, @password, @salt)";
@@ -401,6 +383,81 @@ namespace Blazor_OpenBMCLAPI.BackEnd.Database
                 await ExecuteNonQuery(sql, parameters);
             }
             return true;
+        }
+        public async Task<List<ClusterInfo>> GetClusters(string userName)
+        {
+            List<ClusterInfo> clusterInfoList = new();
+            using (DbDataReader reader = await ExecuteQuery($"select * from {userName}_clusters"))
+            {
+                while (await reader.ReadAsync())
+                {
+                    ClusterInfo clusterInfo = new ClusterInfo
+                    {
+                        cluster_id = reader["id"].ToString(),
+                        cluster_secret = reader["secret"].ToString(),
+                        cluster_id_hash = reader["id"].ToString()
+                    };
+                    // AES解密
+                    string userPasswordCipher = await QueryUserPasswordCipher(userName);
+                    clusterInfo.cluster_id = AESCipher.Decrypt(clusterInfo.cluster_id, userPasswordCipher);
+                    clusterInfo.cluster_secret = AESCipher.Decrypt(clusterInfo.cluster_secret, userPasswordCipher);
+                    clusterInfoList.Add(clusterInfo);
+                }
+            }
+            return clusterInfoList;
+        }
+        public async Task<bool> CheckProfile(string userName, string name)
+        {
+            string sql = $"select * from {userName}_profiles where name=@name";
+            SqliteParameter[] parameters =
+            {
+                new SqliteParameter("@name",name)
+            };
+            var reader=await ExecuteQuery(sql, parameters);
+            if(!reader.Read()) return false;
+            return true;
+
+        }
+        public async Task AddProfile(string userName, string name, string type, string endpoint)
+        {
+            if (await CheckProfile(userName, name)) return;
+            string sql = $"insert into {userName}_profiles (name, type, endpoint) values (@name, @type, @endpoint)";
+            SqliteParameter[] parameters =
+            {
+                new SqliteParameter("@name",name),
+                new SqliteParameter("@type",type),
+                new SqliteParameter("@endpoint",endpoint)
+            };
+            await ExecuteNonQuery(sql, parameters);
+        }
+        public async Task<bool> DeleteProfile(string userName,string name)
+        {
+            if(!await CheckProfile(userName,name)) return false;
+            string sql = $"delete from {userName}_profiles where name=@name";
+            SqliteParameter[] parameters =
+            {
+                new SqliteParameter("@name",name)
+            };
+            await ExecuteNonQuery(sql, parameters);
+            return true;
+        }
+        public async Task<List<ProfileInfo>> GetProfiles(string userName)
+        {
+            List<ProfileInfo> profiles = new List<ProfileInfo>();
+            using (DbDataReader reader = await ExecuteQuery($"select * from {userName}_profiles"))
+            {
+                while(await reader.ReadAsync())
+                {
+                    ProfileInfo profile = new ProfileInfo
+                    {
+                        name = reader["name"].ToString(),
+                        type = reader["type"].ToString(),
+                        endpoint = reader["endpoint"].ToString()
+                    };
+                    profiles.Add(profile);
+                }
+            }
+            return profiles;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using AntDesign;
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace Blazor_OpenBMCLAPI.BackEnd
@@ -24,12 +25,33 @@ namespace Blazor_OpenBMCLAPI.BackEnd
         public string password { get; set; }
         //public bool is_full { get; set;}
     }
-    public class StorageInfo
+    public interface IProfile
     {
+        [DisplayName("Name")]
+        public string name { get; set; }
+        [DisplayName("Type")]
         public string type { get; set; }
+        [DisplayName("Endpoint")]
         public string endpoint { get; set; }
-        public string path { get; set; }
-        public string userName { set; get; }
-        public string password { set; get; }
+    }
+    public class ProfileInfo : IProfile
+    {
+        [DisplayName("Name")]
+        public string name { get; set; }
+        [DisplayName("Type")]
+        public string type { get; set; }
+        [DisplayName("Endpoint")]
+        public string endpoint { get; set; }
+
+    }
+    public class ProfileType
+    {
+        public string TypeCode { get; set; }
+        public string TypeDisplay { get; set; }
+        public ProfileType(string typeCode, string typeDisplay)
+        {
+            TypeCode = typeCode;
+            TypeDisplay = typeDisplay;
+        }
     }
 }

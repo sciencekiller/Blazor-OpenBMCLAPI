@@ -1,0 +1,43 @@
+﻿@inject Toolbelt.Blazor.I18nText.I18nText I18nText
+@inject UserService _userService
+<InputChunk @bind-Value="@InternalValue.name" placeHolder="@i18n["name"]" tip="@i18n["name"]" />
+<br />
+<Select DataSource="@supportTypes"
+        @bind-Value="@InternalValue.type"
+        ItemValue="c=>c.TypeCode"
+        ItemLabel="c=>c.TypeDisplay"
+        DefaultValue="@("csharp_remote")"/>
+<br />
+<InputChunk placeHolder="@i18n["endpoint"]" @bind-Value="@InternalValue.endpoint" tip="@i18n["endpoint"]" />
+
+@code {
+    [Parameter]
+    public ProfileInfo Value { get; set; }
+
+    [Parameter]
+    public EventCallback<ProfileInfo> ValueChanged { get; set; }
+
+    private ProfileInfo InternalValue
+    {
+        get => Value;
+        set
+        {
+            if (Value != value)
+            {
+                Value = value;
+                ValueChanged.InvokeAsync(value);
+            }
+        }
+    }
+    private List<ProfileType> supportTypes;
+    private I18nText.profile i18n = new I18nText.profile();
+    protected async override Task OnInitializedAsync()
+    {
+        i18n = await I18nText.GetTextTableAsync<I18nText.profile>(this);
+        supportTypes = new()
+        {
+            new ProfileType("csharp_remote",i18n["csharp_remote"])
+        };
+    }
+
+}

@@ -1,5 +1,8 @@
 using AntDesign.ProLayout;
 using Blazor_OpenBMCLAPI.BackEnd;
+using Blazor_OpenBMCLAPI.BackEnd.Database;
+using Blazor_OpenBMCLAPI.Middleware;
+using Blazor_OpenBMCLAPI.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -49,9 +52,10 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         .AddCookie(options =>
         {
             options.Cookie.Name = "bmclapi";
-            options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
+            options.Cookie.SameSite = SameSiteMode.Strict;
         });
 builder.Services.AddScoped<UserService>();
+builder.Services.AddSingleton<IDatabase,SQLiteDatabase>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -98,6 +102,6 @@ app.MapGet("Culture/Set",(HttpRequest request, [FromQuery] string culture, [From
     return Results.LocalRedirect(redirectUri);
 });
 app.UseMiddleware<InvalidateSessionMiddleware>();
+
 //</1.3 Add Minimal API>
-await Initialize.Run();
 app.Run();

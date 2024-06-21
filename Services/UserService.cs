@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 //By ChatGPT
-namespace Blazor_OpenBMCLAPI.BackEnd
+namespace Blazor_OpenBMCLAPI.Services
 {
     /// <summary>
     /// 提供程序内查询登录用户信息的类

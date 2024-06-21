@@ -3,7 +3,6 @@
 @inject Toolbelt.Blazor.I18nText.I18nText I18nText
 @inject IMessageService _message
 @inject UserService _userService
-@using Blazor_OpenBMCLAPI.BackEnd;
 <h1 style="font-size:32px">@i18n["title"]</h1>
 <p></p>
 <p style="font-size:14px">@i18n["cluster_intro"]</p>
@@ -37,14 +36,14 @@
     </ActionColumn>
 </Table>
 @code {
-    public static ClusterInfo editInfo = new ClusterInfo();
+    public ClusterInfo editInfo = new ClusterInfo();
     public List<ClusterInfo> clusterinfo = new();
     public ClusterInfo addInfo = new();
     I18nText.cluster i18n = new I18nText.cluster();
     protected override async Task OnInitializedAsync()
     {
         i18n = await I18nText.GetTextTableAsync<I18nText.cluster>(this);
-        clusterinfo = await Shared.Database.GetClusters(_userService.GetCurrentUsername());
+        clusterinfo = await db.GetClusters(_userService.GetCurrentUsername());
     }
     private bool _modal_visible = false;
     private bool _popover_visible = false;
@@ -56,15 +55,15 @@
     }
     private async Task HandleOk()
     {
-        if (await Shared.Database.CheckCluster(_userService.GetCurrentUsername(), addInfo.cluster_id) || string.IsNullOrWhiteSpace(addInfo.cluster_id) || string.IsNullOrWhiteSpace(addInfo.cluster_secret))
+        if (await db.CheckCluster(_userService.GetCurrentUsername(), addInfo.cluster_id) || string.IsNullOrWhiteSpace(addInfo.cluster_id) || string.IsNullOrWhiteSpace(addInfo.cluster_secret))
         {
             RenderFragment customIcon = @<Icon Type="close-circle" Theme="outline" Style="color:red"></Icon>;
             await _message.Error(i18n["invalid"]);
             return;
         }
-        await Shared.Database.AddCluster(_userService.GetCurrentUsername(), addInfo.cluster_id, addInfo.cluster_secret);
+        await db.AddCluster(_userService.GetCurrentUsername(), addInfo.cluster_id, addInfo.cluster_secret);
         _modal_visible = false;
-        clusterinfo = await Shared.Database.GetClusters(_userService.GetCurrentUsername());
+        clusterinfo = await db.GetClusters(_userService.GetCurrentUsername());
     }
     internal async Task Save()
     {
@@ -78,23 +77,23 @@
     private async Task Delete(string id)
     {
         Trace.WriteLine(_userService.GetCurrentUsername() + "\t" + id);
-        if (!await Shared.Database.DeleteCluster(_userService.GetCurrentUsername(), id))
+        if (!await db.DeleteCluster(_userService.GetCurrentUsername(), id))
         {
-            clusterinfo = await Shared.Database.GetClusters(_userService.GetCurrentUsername());
+            clusterinfo = await db.GetClusters(_userService.GetCurrentUsername());
             await _message.Error(i18n["delete_failed"]);
         }
         else
         {
-            clusterinfo = await Shared.Database.GetClusters(_userService.GetCurrentUsername());
+            clusterinfo = await db.GetClusters(_userService.GetCurrentUsername());
             await _message.Success(i18n["delete_success"]);
         }
     }
     private async Task Edit(string origin_id, string target_id, string target_secret)
     {
         popoverButtonLoading = true;
-        await Shared.Database.DeleteCluster(_userService.GetCurrentUsername(), origin_id);
-        await Shared.Database.AddCluster(_userService.GetCurrentUsername(), target_id, target_secret);
-        clusterinfo = await Shared.Database.GetClusters(_userService.GetCurrentUsername());
+        await db.DeleteCluster(_userService.GetCurrentUsername(), origin_id);
+        await db.AddCluster(_userService.GetCurrentUsername(), target_id, target_secret);
+        clusterinfo = await db.GetClusters(_userService.GetCurrentUsername());
         _popover_visible = false;
         popoverButtonLoading = false;
     }
