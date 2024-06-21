@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Components\ProfileInfoInput.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AntDesign.Charts" Version="0.5.1" />
     <PackageReference Include="AntDesign.ProLayout" Version="0.19.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.6" />
@@ -46,7 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Components\ProfileInfoInput.razor" />
     <None Include="E:\Blazor-OpenBMCLAPI\.editorconfig" />
   </ItemGroup>
 
@@ -64,14 +59,6 @@
 
   <ItemGroup>
     <None Remove="i18ntext\profile.zh-CN.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Components\ProfileInfoInput.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Components\ProfileInfoInput.razor" />
   </ItemGroup>
   
 </Project>

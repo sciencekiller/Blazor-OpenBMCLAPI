@@ -6,6 +6,10 @@
   "action": "操作",
   "name": "配置名",
   "endpoint": "终端地址",
+  "endpoint_detail": "终端地址，如bmcl.sciencekill.top:8800",
   "type": "类型",
-  "csharp_remote": "OpenBMCLAPI CSharp版本远程节点"
+  "csharp_remote": "OpenBMCLAPI CSharp版本远程节点",
+  "edit": "编辑",
+  "delete": "删除",
+  "confirm": "确认"
 }

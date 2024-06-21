@@ -5,15 +5,25 @@
 @inject UserService _userService
 
 <h1 style="font-size:32px">@i18n["title"]</h1>
+<Button type="@ButtonType.Primary" Style="margin-left:auto" @onclick="AddProfile">@i18n["add"]</Button>
 <Modal Title="@i18n["add_profile"]"
        Visible="@_modal_visible"
        OnCancel="@HandleCancel"
        OnOk="@HandleOk">
-    <Blazor_OpenBMCLAPI.Components.ProfileInfoInput @bind=@addInfo />
+    <InputChunk @bind-Value="@addInfo.name" placeHolder="@i18n["name"]" tip="@i18n["name"]" />
+    <br />
+    <p>@i18n["type"] :</p>
+    <Select DataSource="@supportTypes"
+            @bind-Value="@addInfo.type"
+            ItemValue="c=>c.TypeCode"
+            ItemLabel="c=>c.TypeDisplay"
+            DefaultValue="@("csharp_remote")" />
+    <br />
+    <InputChunk placeHolder="@i18n["endpoint_detail"]" @bind-Value="@addInfo.endpoint" tip="@i18n["endpoint"]" />
 </Modal>
 <Table TItem="IProfile" DataSource="@profileInfo">
     <PropertyColumn Property="c=>c.name" Title="@i18n["name"]"></PropertyColumn>
-    <PropertyColumn Property="c=>c.type" Title="@i18n["type"]"></PropertyColumn>
+    <PropertyColumn Property="c=>i18n[c.type].ToString()" Title="@i18n["type"]"></PropertyColumn>
     <PropertyColumn Property="c=>c.endpoint" Title="@i18n["endpoint"]"></PropertyColumn>
     <ActionColumn Title="@i18n["action"]">
         <Space Size=@("middle")>
@@ -26,7 +36,16 @@
                         <Button Type="@ButtonType.Link">@i18n["edit"]</Button>
                     </ChildContent>
                     <ContentTemplate>
-                        <Blazor_OpenBMCLAPI.Components.ProfileInfoInput @bind="@editInfo" />
+                        <InputChunk @bind-Value="@editInfo.name" placeHolder="@i18n["name"]" tip="@i18n["name"]" />
+                        <br />
+                        <p>@i18n["type"] :</p>
+                        <Select DataSource="@supportTypes"
+                                @bind-Value="@editInfo.type"
+                                ItemValue="c=>c.TypeCode"
+                                ItemLabel="c=>c.TypeDisplay"
+                                DefaultValue="@("csharp_remote")" />
+                        <br />
+                        <InputChunk placeHolder="@i18n["endpoint_detail"]" @bind-Value="@editInfo.endpoint" tip="@i18n["endpoint"]" />
                         <Button Type="@ButtonType.Primary" @onclick="()=>Edit(context.name,editInfo.name,editInfo.type,editInfo.endpoint)" Loading="@popoverButtonLoading">@i18n["confirm"]</Button>
                     </ContentTemplate>
                 </Popover>
@@ -35,9 +54,10 @@
     </ActionColumn>
 </Table>
 @code {
+    private List<ProfileType> supportTypes;
     public List<ProfileInfo> profileInfo = new();
-    public ProfileInfo editInfo;
-    public ProfileInfo addInfo;
+    public ProfileInfo editInfo = new ProfileInfo();
+    public ProfileInfo addInfo = new ProfileInfo();
     I18nText.profile i18n = new I18nText.profile();
     private bool _popover_visible = false;
     private bool popoverButtonLoading = false;
@@ -55,7 +75,7 @@
             await _message.Error(i18n["invalid"]);
             return;
         }
-        await db.AddProfile(_userService.GetCurrentUsername(), addInfo.name, addInfo.type,addInfo.endpoint);
+        await db.AddProfile(_userService.GetCurrentUsername(), addInfo.name, addInfo.type, addInfo.endpoint);
         _modal_visible = false;
         profileInfo = await db.GetProfiles(_userService.GetCurrentUsername());
     }
@@ -64,7 +84,7 @@
         RenderFragment customIcon = @<Icon Type="check-circle" Theme="outline" Style="color:limegreen"></Icon>;
         await _message.Success(i18n["saved"]);
     }
-    public void AddCluster()
+    public void AddProfile()
     {
         _modal_visible = true;
     }
@@ -72,16 +92,20 @@
     {
         i18n = await I18nText.GetTextTableAsync<I18nText.profile>(this);
         profileInfo = await db.GetProfiles(_userService.GetCurrentUsername());
+        supportTypes = new()
+    {
+        new ProfileType("csharp_remote",i18n["csharp_remote"])
+    };
     }
     private async Task Delete(string profileName)
     {
-        await db.DeleteProfile(_userService.GetCurrentUsername(),profileName);
+        await db.DeleteProfile(_userService.GetCurrentUsername(), profileName);
     }
-    private async Task Edit(string origin_name,string target_name,string target_type,string target_endpoint)
+    private async Task Edit(string origin_name, string target_name, string target_type, string target_endpoint)
     {
         popoverButtonLoading = true;
         await db.DeleteProfile(_userService.GetCurrentUsername(), origin_name);
-        await db.AddProfile(_userService.GetCurrentUsername(), target_name, target_type,target_endpoint);
+        await db.AddProfile(_userService.GetCurrentUsername(), target_name, target_type, target_endpoint);
         profileInfo = await db.GetProfiles(_userService.GetCurrentUsername());
         _popover_visible = false;
         popoverButtonLoading = false;

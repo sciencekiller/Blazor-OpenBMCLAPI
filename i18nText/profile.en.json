@@ -1,11 +1,15 @@
 {
-  "tile": "Node profile",
+  "title": "Node profile",
   "intro": "This panel only provides the function of obtaining node data and displaying, and managing local nodes, and does not distribute files. So, you need to specify your node, including the address, the language version, and give it a unique name.",
   "add": "Add",
   "add_profile": "Add a node profile",
   "action": "Action",
   "name": "Name",
   "endpoint": "Endpoint",
+  "endpoint_detail": "Endpoint, for example, bmcl.sciencekill.top:8800",
   "type": "Type",
   "csharp_remote": "OpenBMCLAPI CSharp Edition Remote Node",
+  "edit": "Edit",
+  "delete": "Delete",
+  "confirm": "Confirm"
 }

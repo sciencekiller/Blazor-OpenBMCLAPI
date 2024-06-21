@@ -27,11 +27,8 @@ namespace Blazor_OpenBMCLAPI.BackEnd
     }
     public interface IProfile
     {
-        [DisplayName("Name")]
         public string name { get; set; }
-        [DisplayName("Type")]
         public string type { get; set; }
-        [DisplayName("Endpoint")]
         public string endpoint { get; set; }
     }
     public class ProfileInfo : IProfile
