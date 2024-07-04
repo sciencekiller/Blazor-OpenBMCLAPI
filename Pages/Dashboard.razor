@@ -1,5 +1,5 @@
 ﻿@page "/"
-@inject Toolbelt.Blazor.I18nText.I18nText I18nText
+@inject IStringLocalizer<Resources.Dashboard> i18n
 @inject IJSRuntime JSRunTime
 
 @using Blazor_OpenBMCLAPI.BackEnd;
@@ -15,11 +15,3 @@
         </div>
     </Body>
 </Card>
-
-@code {
-    I18nText.dashboard i18n = new I18nText.dashboard();
-    protected override async Task OnInitializedAsync()
-    {
-        i18n = await I18nText.GetTextTableAsync<I18nText.dashboard>(this);
-    }
-}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value>
+    </resheader>
+    <data name="title" xml:space="preserve">
+        <value>节点配置文件</value>
+    </data>
+    <data name="intro" xml:space="preserve">
+        <value>该面板只是提供获取节点数据并展示，和管理本地节点的功能，并不能分发文件。所以，你需要指定你的节点，包括地址，语言版本，并为其赋予唯一名字。</value>
+    </data>
+    <data name="add" xml:space="preserve">
+        <value>添加</value>
+    </data>
+    <data name="add_profile" xml:space="preserve">
+        <value>添加节点配置</value>
+    </data>
+    <data name="action" xml:space="preserve">
+        <value>操作</value>
+    </data>
+    <data name="name" xml:space="preserve">
+        <value>配置名</value>
+    </data>
+    <data name="endpoint" xml:space="preserve">
+        <value>终端地址</value>
+    </data>
+    <data name="endpoint_detail" xml:space="preserve">
+        <value>终端地址，如bmcl.sciencekill.top:8800</value>
+    </data>
+    <data name="type" xml:space="preserve">
+        <value>类型</value>
+    </data>
+    <data name="csharp_remote" xml:space="preserve">
+        <value>OpenBMCLAPI CSharp版本远程节点</value>
+    </data>
+    <data name="edit" xml:space="preserve">
+        <value>编辑</value>
+    </data>
+    <data name="delete" xml:space="preserve">
+        <value>删除</value>
+    </data>
+    <data name="confirm" xml:space="preserve">
+        <value>确认</value>
+    </data>
+</root>

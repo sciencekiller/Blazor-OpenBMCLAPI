@@ -1,4 +1,4 @@
-﻿@inject Toolbelt.Blazor.I18nText.I18nText I18nText
+﻿@inject IStringLocalizer<Resources.Auth> i18n
 @inject NavigationManager NavigationManager
 <Result Status="403"
         Title=@i18n["unauth_title"]
@@ -6,11 +6,9 @@
         Extra="extra" />
 
 @code {
-    I18nText.auth i18n = new I18nText.auth();
     RenderFragment extra;
     protected override async Task OnInitializedAsync()
     {
-        i18n = await I18nText.GetTextTableAsync<I18nText.auth>(this);
         extra = (RenderTreeBuilder __builder) =>
         {
             <div>

@@ -1,7 +1,7 @@
 ﻿@page "/settings"
-@inject Toolbelt.Blazor.I18nText.I18nText I18nText
+@inject IStringLocalizer<Resources.Settings> i18n
 @inject IOptions<RequestLocalizationOptions> RequestLocalizationOptions
-@inject NavigationManager Nav
+@inject ILocalizationService LocalizationService
 @using System.Globalization;
 @using Microsoft.Extensions.Options
 
@@ -20,7 +20,6 @@
 </Select>
 
 @code {
-    I18nText.settings i18n = new I18nText.settings();
     List<CultureInfo> supportedCultures = new List<CultureInfo>();
     string selectedCulture{
         get => CultureInfo.CurrentCulture.Name; 
@@ -28,23 +27,30 @@
         {
             if (CultureInfo.CurrentCulture.Name != value)
             {
-                var uri = new Uri(Nav.Uri)
-                    .GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
-                var cultureEscaped = Uri.EscapeDataString(value);
-                var uriEscaped = Uri.EscapeDataString(uri);
-
-                Nav.NavigateTo(
-                    $"Culture/Set?culture={cultureEscaped}&redirectUri={uriEscaped}",
-                    forceLoad: true);
+                Trace.WriteLine(value);
+                LocalizationService.SetLanguage(new CultureInfo(value));
             }
         }
     }
     protected override async Task OnInitializedAsync()
     {
-        i18n = await I18nText.GetTextTableAsync<I18nText.settings>(this);
         if (RequestLocalizationOptions != null && RequestLocalizationOptions.Value.SupportedCultures != null)
         {
             supportedCultures = RequestLocalizationOptions.Value.SupportedCultures.ToList();
         }
+        LocalizationService.LanguageChanged += OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged(object sender, CultureInfo e)
+    {
+        Trace.WriteLine("StateHasChanged");
+        // 处理语言更改事件的逻辑
+        StateHasChanged(); // 如果需要更新UI，调用StateHasChanged()
+    }
+
+    // 记得在组件或页面销毁时取消订阅
+    public void Dispose()
+    {
+        LocalizationService.LanguageChanged -= OnLanguageChanged;
     }
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value>
+    </resheader>
+    <data name="title" xml:space="preserve">
+        <value>Settings</value>
+    </data>
+    <data name="language_header" xml:space="preserve">
+        <value>Language</value>
+    </data>
+    <data name="language_invite" xml:space="preserve">
+        <value>Sciencekill is not a much genius, so he can't turn Blazor-OpenBMCLAPI into all kinds of languages like some large company. But he is always willing that somebody could translate the app and send the translation file to him. The one only need to download the translation files (/i18nText) in the GitHub repository, then make a copy of one of the translation files that you understand. Change the language code in the file name. Don't change key, only replace the value!</value>
+    </data>
+    <data name="language_intro" xml:space="preserve">
+        <value>You can select your language in the (maybe on the right?) selection box below</value>
+    </data>
+</root>

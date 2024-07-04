@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value>
+    </resheader>
+    <data name="login_title" xml:space="preserve">
+        <value>登录</value>
+    </data>
+    <data name="unauth_title" xml:space="preserve">
+        <value>糟糕！您尚未登录</value>
+    </data>
+    <data name="unauth_intro" xml:space="preserve">
+        <value>您当前尚未登录，但您正在访问的页面需要管理员权限，因此请先登录。</value>
+    </data>
+    <data name="back_home" xml:space="preserve">
+        <value>回到首页</value>
+    </data>
+    <data name="notfound_title" xml:space="preserve">
+        <value>糟糕！未找到页面</value>
+    </data>
+    <data name="notfound_intro" xml:space="preserve">
+        <value>我们非常抱歉，但是我们无法找到您正在访问的页面，请稍等片刻，或与管理员联系。</value>
+    </data>
+    <data name="register_title" xml:space="preserve">
+        <value>创建账户</value>
+    </data>
+    <data name="register_intro" xml:space="preserve">
+        <value>您正在创建一个用户。这个用户一旦创建，将可以全权操作节点，包括访问存储敏感信息，请谨慎操作。</value>
+    </data>
+    <data name="username" xml:space="preserve">
+        <value>用户名</value>
+    </data>
+    <data name="password" xml:space="preserve">
+        <value>密码</value>
+    </data>
+    <data name="invalid" xml:space="preserve">
+        <value>用户名或密码无效</value>
+    </data>
+    <data name="login_failed" xml:space="preserve">
+        <value>登录失败，请检查用户名和密码。</value>
+    </data>
+    <data name="confirm" xml:space="preserve">
+        <value>确认</value>
+    </data>
+</root>

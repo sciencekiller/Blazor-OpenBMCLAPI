@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value>
+    </resheader>
+    <data name="title" xml:space="preserve">
+        <value>Node profile</value>
+    </data>
+    <data name="intro" xml:space="preserve">
+        <value>This panel only provides the function of obtaining node data and displaying, and managing local nodes, and does not distribute files. So, you need to specify your node, including the address, the language version, and give it a unique name.</value>
+    </data>
+    <data name="add" xml:space="preserve">
+        <value>Add</value>
+    </data>
+    <data name="add_profile" xml:space="preserve">
+        <value>Add a node profile</value>
+    </data>
+    <data name="action" xml:space="preserve">
+        <value>Action</value>
+    </data>
+    <data name="name" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="endpoint" xml:space="preserve">
+        <value>Endpoint</value>
+    </data>
+    <data name="endpoint_detail" xml:space="preserve">
+        <value>Endpoint, for example, bmcl.sciencekill.top:8800</value>
+    </data>
+    <data name="type" xml:space="preserve">
+        <value>Type</value>
+    </data>
+    <data name="csharp_remote" xml:space="preserve">
+        <value>OpenBMCLAPI CSharp Edition Remote Node</value>
+    </data>
+    <data name="edit" xml:space="preserve">
+        <value>Edit</value>
+    </data>
+    <data name="delete" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="confirm" xml:space="preserve">
+        <value>Confirm</value>
+    </data>
+</root>

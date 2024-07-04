@@ -54,28 +54,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Global.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\Profile.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Profile.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\Settings.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\Auth.en-US.resx">
-      <Generator></Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Auth.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Auth.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Cluster.en-US.resx">
-      <Generator></Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Cluster.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -85,35 +69,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Dashboard.en-US.resx">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Global.en-US.resx">
-      <Generator></Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Global.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Global.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Profile.en-US.resx">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Profile.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Profile.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Profile.zh-CN.resx">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Settings.en-US.resx">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Settings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Settings.zh-CN.resx">
-      <Generator></Generator>
     </EmbeddedResource>
   </ItemGroup>
   

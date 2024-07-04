@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value>
+    </resheader>
+    <data name="title" xml:space="preserve">
+        <value>Dashboard</value>
+    </data>
+    <data name="status" xml:space="preserve">
+        <value>Node status</value>
+    </data>
+    <data name="online" xml:space="preserve">
+        <value>Online</value>
+    </data>
+    <data name="offline" xml:space="preserve">
+        <value>Offline</value>
+    </data>
+    <data name="syncing" xml:space="preserve">
+        <value>Syncing files</value>
+    </data>
+</root>

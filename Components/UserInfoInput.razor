@@ -1,4 +1,4 @@
-﻿@inject Toolbelt.Blazor.I18nText.I18nText I18nText
+﻿@inject IStringLocalizer<Resources.Auth> i18n
 @inject IMessageService _message
 @inject IJSRuntime JSRunTime
 
@@ -18,10 +18,8 @@
     public string inputType { get; set; }
 
     public UserInfo userInfo { get; set; } = new();
-    I18nText.auth i18n = new I18nText.auth();
     protected override async Task OnInitializedAsync()
     {
-        i18n = await I18nText.GetTextTableAsync<I18nText.auth>(this);
     }
     private async Task Save()
     {
@@ -30,7 +28,7 @@
             if (string.IsNullOrWhiteSpace(userInfo.userName) || string.IsNullOrWhiteSpace(userInfo.password)||await db.AuthUser(userInfo.userName))
             {
                 RenderFragment customIcon = @<Icon Type="close-circle" Theme="outline" Style="color:red"></Icon>;
-                await _message.Error(i18n["invalid"]);
+                await _message.Error(i18n["invalid"].ToString());
             }
             else
             {
@@ -51,7 +49,7 @@
             else
             {
                 RenderFragment customIcon = @<Icon Type="close-circle" Theme="outline" Style="color:red"></Icon>;
-                await _message.Error(i18n["login_failed"]);
+                await _message.Error(i18n["login_failed"].ToString());
             }
         }
     }

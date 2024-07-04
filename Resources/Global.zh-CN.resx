@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value>
+    </resheader>
+    <data name="dashboard" xml:space="preserve">
+        <value>数据面板</value>
+    </data>
+    <data name="settings" xml:space="preserve">
+        <value>设置</value>
+    </data>
+    <data name="profile" xml:space="preserve">
+        <value>配置</value>
+    </data>
+    <data name="cluster" xml:space="preserve">
+        <value>用户配置</value>
+    </data>
+    <data name="node_profile" xml:space="preserve">
+        <value>节点配置文件</value>
+    </data>
+    <data name="hello" xml:space="preserve">
+        <value>你好, </value>
+    </data>
+    <data name="unauth" xml:space="preserve">
+        <value>未登录</value>
+    </data>
+    <data name="login_title" xml:space="preserve">
+        <value>登录</value>
+    </data>
+    <data name="login_intro" xml:space="preserve">
+        <value>您当前未登录。您可以按下面的链接登录，否则您将无法访问某些页面。</value>
+    </data>
+    <data name="logout_title" xml:space="preserve">
+        <value>登出</value>
+    </data>
+    <data name="logout_intro" xml:space="preserve">
+        <value>您当前已登录。如果您想注销并清除cookie，请单击下面的链接。</value>
+    </data>
+</root>

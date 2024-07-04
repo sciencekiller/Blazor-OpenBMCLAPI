@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value>
+    </resheader>
+    <data name="title" xml:space="preserve">
+        <value>用户配置</value>
+    </data>
+    <data name="cluster_intro" xml:space="preserve">
+        <value>你需要配置用户id和secret以上线你的节点。</value>
+    </data>
+    <data name="save" xml:space="preserve">
+        <value>保存</value>
+    </data>
+    <data name="saved" xml:space="preserve">
+        <value>太好了！所有cluster更改都已保存~</value>
+    </data>
+    <data name="add" xml:space="preserve">
+        <value>添加</value>
+    </data>
+    <data name="confirm" xml:space="preserve">
+        <value>确认</value>
+    </data>
+    <data name="invalid" xml:space="preserve">
+        <value>Cluster id或secret无效</value>
+    </data>
+    <data name="add_cluster" xml:space="preserve">
+        <value>添加新的Cluster</value>
+    </data>
+    <data name="cancel" xml:space="preserve">
+        <value>取消</value>
+    </data>
+    <data name="delete" xml:space="preserve">
+        <value>删除</value>
+    </data>
+    <data name="delete_confirm" xml:space="preserve">
+        <value>你确定删除Cluster吗？</value>
+    </data>
+    <data name="delete_failed" xml:space="preserve">
+        <value>删除cluster失败！</value>
+    </data>
+    <data name="delete_success" xml:space="preserve">
+        <value>任务成功完成</value>
+    </data>
+    <data name="action" xml:space="preserve">
+        <value>操作</value>
+    </data>
+    <data name="edit" xml:space="preserve">
+        <value>编辑</value>
+    </data>
+    <data name="edit_cluster" xml:space="preserve">
+        <value>编辑cluster</value>
+    </data>
+</root>

@@ -1,14 +1,12 @@
 ﻿@page "/register"
-@inject Toolbelt.Blazor.I18nText.I18nText I18nText
+@inject IStringLocalizer<Resources.Auth> i18n
 @inject NavigationManager NavigationManager
 <h1 style="font-size:20px">@i18n["register_title"]</h1>
 <p>@i18n["register_intro"]</p>
 <Blazor_OpenBMCLAPI.Components.UserInfoInput inputType="register"/>
 @code {
-    I18nText.auth i18n = new I18nText.auth();
     protected override async Task OnInitializedAsync()
     {
         if (await db.IsUserExist()) NavigationManager.NavigateTo("/unauth",true);
-        i18n = await I18nText.GetTextTableAsync<I18nText.auth>(this);
     }
 }

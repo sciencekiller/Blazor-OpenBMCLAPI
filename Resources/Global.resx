@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value>
+    </resheader>
+    <data name="dashboard" xml:space="preserve">
+        <value>Dashboard</value>
+    </data>
+    <data name="settings" xml:space="preserve">
+        <value>Settings</value>
+    </data>
+    <data name="profile" xml:space="preserve">
+        <value>Profile</value>
+    </data>
+    <data name="cluster" xml:space="preserve">
+        <value>User information</value>
+    </data>
+    <data name="node_profile" xml:space="preserve">
+        <value>Node profiles</value>
+    </data>
+    <data name="hello" xml:space="preserve">
+        <value>Hello, </value>
+    </data>
+    <data name="unauth" xml:space="preserve">
+        <value>Not logged in</value>
+    </data>
+    <data name="login_title" xml:space="preserve">
+        <value>Log in</value>
+    </data>
+    <data name="login_intro" xml:space="preserve">
+        <value>You are not currently logged in. You can press the link below to log in, or you will not able to visit some pages.</value>
+    </data>
+    <data name="logout_title" xml:space="preserve">
+        <value>Log out</value>
+    </data>
+    <data name="logout_intro" xml:space="preserve">
+        <value>You are currently logged in. If you want to log out and clean the cookie, please click the link below.</value>
+    </data>
+</root>

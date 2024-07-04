@@ -1,5 +1,5 @@
 ﻿@namespace Blazor_OpenBMCLAPI
-@inject Toolbelt.Blazor.I18nText.I18nText I18nText
+@inject IStringLocalizer<Global> i18n
 @inherits LayoutComponentBase
 @inject IJSRuntime JSRunTime
 @inject NavigationManager NavigationManager
@@ -20,11 +20,9 @@
 <SettingDrawer />
 
 @code {
-    I18nText.global i18n = new I18nText.global();
     RenderFragment extra, _content_auth,_content_unauth;
     protected override async Task OnInitializedAsync()
     {
-        i18n = await I18nText.GetTextTableAsync<I18nText.global>(this);
         RefreshMenuLanguage();
         _content_auth =
         (RenderTreeBuilder __builder) =>

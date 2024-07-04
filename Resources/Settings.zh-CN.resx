@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value>
+    </resheader>
+    <data name="title" xml:space="preserve">
+        <value>设置</value>
+    </data>
+    <data name="language_header" xml:space="preserve">
+        <value>语言</value>
+    </data>
+    <data name="language_invite" xml:space="preserve">
+        <value>Sciencekill不是一个天才，所以他不能像一些大公司那样把Blazor-OpenBMCLAPI翻译成各种语言。但他非常希望有人可以翻译应用程序并将翻译文件发送给他。只需在 GitHub 存储库中下载翻译文件 （/i18nText），然后复制您理解的翻译文件之一。更改文件名中的语言代码。不要更改键，只需替换值！</value>
+    </data>
+    <data name="language_intro" xml:space="preserve">
+        <value>你可以在下面的（也许是后面的？）选择框中选择你的语言</value>
+    </data>
+</root>
